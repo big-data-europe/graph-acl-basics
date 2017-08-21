@@ -55,13 +55,10 @@
 ;;   :resource-base (s-url "http://webcat.tmp.tenforce.com/distributions/")
 ;;   :on-path "distributions")
 
-;; (define-resource theme ()
-;;   :class (s-prefix "tfdcat:Theme")
-;;   :properties `((:pref-label :string ,(s-prefix "skos:prefLabel")))
-;;   :has-many `((dataset :via ,(s-prefix "dcat:theme")
-;;                        :inverse t
-;;                        :as "datasets"))
-;;   :resource-base (s-url "http://webcat.tmp.tenforce.com/themes/")
-;;   :on-path "themes")
+(define-resource book ()
+   :class (s-prefix "mu:Book")
+   :properties `((:title :string ,(s-prefix "dct:title")))
+   :resource-base (s-url "http://webcat.tmp.tenforce.com/themes/")
+   :on-path "books")
 
 ;;
