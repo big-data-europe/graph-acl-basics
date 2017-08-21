@@ -12,6 +12,14 @@ services:
       - resource:resource
     volumes:
       - ./config/dispatcher:/config
+  as:
+    image: nathanielrb/mu-graph-rewriter:1.0.1
+    links:
+      - db:database
+    environment:
+      MU_DEFAULT_GRAPH: "http://mu.semte.ch/application" # probably unused 
+    volumes:
+      - ./config/rewriter:/config
   db:
     image: tenforce/virtuoso:1.0.0-virtuoso7.2.4
     environment:
@@ -24,6 +32,6 @@ services:
   resource:
     image: semtech/mu-cl-resources:1.15.0
     links:
-      - db:database
+      - as:database
     volumes:
       - ./config/resources:/config
