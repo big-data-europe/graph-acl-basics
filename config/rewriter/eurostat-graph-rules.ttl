@@ -1,0 +1,106 @@
+@prefix dct: <http://purl.org/dc/terms/>.
+@prefix skos: <http://www.w3.org/2004/02/skos/core#>.
+@prefix mu: <http://mu.semte.ch/vocabularies/core/>.
+@prefix types: <http://data.europa.eu/eurostat/graphs/types/>.
+@prefix retailers: <http://data.europa.eu/eurostat/retailers/>.
+@prefix schema: <http://schema.org/>.
+@prefix qb: <http://purl.org/linked-data/cube#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+
+@prefix rewriter: <http://mu.semte.ch/graphs/>.
+@prefix graphs: <http://data.europa.eu/eurostat/>.
+@prefix eurostat: <http://data.europa.eu/eurostat/ns/>.
+@prefix rules: <http://data.europa.eu/eurostat/graphs/rules/>.
+
+#####
+# uuids
+graphs:uuid a rewriter:Graph.
+
+rules:rule2 a rewriter:GraphRule;
+            rewriter:graph graphs:uuid;
+            rewriter:subjectType skos:Concept,
+                                 qb:Observation,
+                                 schema:Offer,
+                                 qb:Dataset,
+                                 dct:Agent,
+                                 eurostat:Date,
+                                 schema:TypeAndQuantityNode;
+            rewriter:predicate mu:uuid.
+
+#####
+# ECOICOP and ISBA
+graphs:ECOICOP a rewriter:Graph.
+
+rules:rule1 a rewriter:GraphRule;
+            rewriter:graph graphs:ECOICOP;
+            rewriter:subjectType skos:Concept;
+            rewriter:predicate rdf:type,
+                               skos:prefLabel, 
+                               skos:broader,
+                               skos:notation.
+
+#####
+# Product Data
+graphs:products a rewriter:Graph.               
+
+rules:rule4 a rewriter:GraphRule;
+              rewriter:graph graphs:products;
+              rewriter:subjectType schema:Offer;
+              rewriter:predicate rdf:type,
+                                 schema:description,
+                                 schema:gtin13,
+                                 schema:identifier,
+                                 schema:includesObject,
+                                 schema:category.
+
+rules:rule7 a rewriter:GraphRule;
+            rewriter:graph graphs:products;
+            rewriter:subjectType schema:TypeAndQuantityNode;
+              rewriter:predicate rdf:type,
+                                 schema:amountOfThisGood,
+                                 schema:unitCode.
+
+#####
+# Scanner Data
+types:ScannerData a rewriter:GraphType.
+
+retailers:Lidl a rewriter:Graph;
+               rewriter:type types:ScannerData;
+               rewriter:realm "Lidl".
+
+rules:rule3 a rewriter:GraphRule;
+              rewriter:graphType types:ScannerData;
+              rewriter:subjectType qb:Observation;
+              rewriter:predicate rdf:type,
+                                 qb:dataSet,
+                                 eurostat:product,
+                                 eurostat:classification,
+                                 eurostat:period,
+                                 eurostat:training,
+                                 eurostat:amount.
+
+#####
+# Datasets
+graphs:datasets a rewriter:Graph.
+
+rules:rule5 a rewriter:GraphRule;
+            rewriter:graph graphs:datasets;
+            rewriter:subjectType qb:DataSet;
+            rewriter:predicate rdf:type,
+                               dct:title,
+                               rdfs:label,
+                               dct:issued,
+                               dct:publisher,
+                               qb:structure,
+                               qb:subject.
+
+#####
+# Retailers
+graphs:retailers a rewriter:Graph.
+
+rules:rule6 a rewriter:GraphRule;
+            rewriter:graph graphs:retailers;
+            rewriter:subjectType dct:Agent;
+            rewriter:predicate dct:title,
+                               rdf:type.
+

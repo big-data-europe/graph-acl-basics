@@ -1,3 +1,5 @@
+(*functional-properties* '(rdf:type))
+
 (*constraint* 
  (lambda ()
    (let ((session (header 'mu-session-id)))
@@ -27,7 +29,7 @@
                "  ?s ?p ?o."
                "}"
                "WHERE {"
-               "  GRAPH <http://mu.semte.ch/application> {"
+               "  GRAPH <http://mu.semte.ch/app> {"
                "    ?s ?p ?o."
                "  }"
                "}")))))
