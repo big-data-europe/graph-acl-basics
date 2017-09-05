@@ -29,7 +29,8 @@
                "  ?s ?p ?o."
                "}"
                "WHERE {"
-               "  GRAPH <http://mu.semte.ch/app> {"
+               "  GRAPH ?graph {"
                "    ?s ?p ?o."
                "  }"
+               "  VALUES ?graph { <http://mu.semte.ch/application> } "
                "}")))))

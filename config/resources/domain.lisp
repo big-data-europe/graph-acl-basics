@@ -55,6 +55,8 @@
 ;;   :resource-base (s-url "http://webcat.tmp.tenforce.com/distributions/")
 ;;   :on-path "distributions")
 
+
+
 (define-resource book ()
    :class (s-prefix "mu:Book")
    :properties `((:title :string ,(s-prefix "dct:title")))
