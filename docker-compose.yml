@@ -13,7 +13,7 @@ services:
     volumes:
       - ./config/dispatcher:/config
   as:
-    image: nathanielrb/mu-graph-rewriter:0.3.0
+    image: nathanielrb/mu-graph-rewriter:0.4.0
     links:
       - db:database
     environment:
