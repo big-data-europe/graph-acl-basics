@@ -61,6 +61,17 @@
    :class (s-prefix "mu:Book")
    :properties `((:title :string ,(s-prefix "dct:title")))
    :resource-base (s-url "http://webcat.tmp.tenforce.com/themes/")
+   :has-many `((author :via ,(s-prefix "mu:author")
+                       :as "author"))
    :on-path "books")
+
+(define-resource author ()
+  :class (s-prefix "mu:Author")
+  :properties `((:name :string ,(s-prefix "dct:title")))
+  :has-many `((book :via ,(s-prefix "mu:author")
+		    :as  "book"
+		    :inverse t))
+  :resource-base (s-url "http://mu.semte.ch/books/")
+  :on-path "authors")
 
 ;;

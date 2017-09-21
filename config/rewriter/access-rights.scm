@@ -1,6 +1,6 @@
 (*functional-properties* '(rdf:type))
 
-(*constraint* 
+(define-constraint
  (lambda ()
    (let ((session (header 'mu-session-id)))
      (if session
