@@ -26,6 +26,10 @@ defmodule Dispatcher do
     Proxy.forward conn, path, "http://resource/"
   end
 
+  match "/rewriter/*path" do
+    Proxy.forward conn, path, "http://as:8890/"
+  end
+
   match _ do
     send_resp( conn, 404, "Route not found.  See config/dispatcher.ex" )
   end

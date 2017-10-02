@@ -33,26 +33,27 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; simpler example using VALUES statement
 
-(*constraint* 
- (conc 
-  "CONSTRUCT { "
-  "  ?s ?p ?o. "
-  "} "
-  "WHERE "
-  "{"  
-  "  { "
-  "    GRAPH ?graph { "
-  "      ?s ?p ?o. "
-  "   } "
-  "    VALUES (?graph ?p) { (<http://data.europa.eu/eurostat/uuid>  mu:uuid)  } "
-  "  } "
-  "  UNION "
-  "  { "
-  "    GRAPH ?graph { "
-  "      ?s ?p ?o. "
-  "      ?s rdf:type ?type. "
-  "   } "
-  "    VALUES (?graph ?type) { (<http://data.europa.eu/eurostat/retailers> dct:Agent) (<http://data.europa.eu/eurostat/datasets> qb:Dataset ) } "
-  "   FILTER ( ?p != mu:uuid )"
-  "  }"
-  "}"))
+(define-constraint
+  'read/write
+  (conc 
+   "CONSTRUCT { "
+   "  ?s ?p ?o. "
+   "} "
+   "WHERE "
+   "{"  
+   "  { "
+   "    GRAPH ?graph { "
+   "      ?s ?p ?o. "
+   "   } "
+   "    VALUES (?graph ?p) { (<http://data.europa.eu/eurostat/uuid>  mu:uuid)  } "
+   "  } "
+   "  UNION "
+   "  { "
+   "    GRAPH ?graph { "
+   "      ?s ?p ?o. "
+   "      ?s rdf:type ?type. "
+   "   } "
+   "    VALUES (?graph ?type) { (<http://data.europa.eu/eurostat/retailers> dct:Agent) (<http://data.europa.eu/eurostat/datasets> qb:Dataset ) } "
+   "   FILTER ( ?p != mu:uuid )"
+   "  }"
+   "}"))

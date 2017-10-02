@@ -57,21 +57,53 @@
 
 
 
-(define-resource book ()
-   :class (s-prefix "mu:Book")
-   :properties `((:title :string ,(s-prefix "dct:title")))
-   :resource-base (s-url "http://webcat.tmp.tenforce.com/themes/")
-   :has-many `((author :via ,(s-prefix "mu:author")
-                       :as "author"))
-   :on-path "books")
+(define-resource person ()
+  :class (s-prefix "xmlns:Person")
+  :properties `((:name :string ,(s-prefix "xmlns:name"))
+                (:email :string ,(s-prefix "xmlns:mbox"))
+                (:role :string ,(s-prefix "school:role")))
+  :has-many `((class :via ,(s-prefix "school:hasTeacher")
+                             :as "classesTaught"
+                             :inverse t)
+              (class :via ,(s-prefix "school:hasStudent")
+                            :as "classesTaken"
+                            :inverse t)
+              (grade :via ,(s-prefix "gradeRecipient")
+                      :as "earnedGrades"
+                      :inverse t))
+  :resource-base (s-url "http://mu.semte.ch/school/people/")
+  :on-path "people")
 
-(define-resource author ()
-  :class (s-prefix "mu:Author")
+(define-resource subject ()
+  :class (s-prefix "school:Subject")
   :properties `((:name :string ,(s-prefix "dct:title")))
-  :has-many `((book :via ,(s-prefix "mu:author")
-		    :as  "book"
-		    :inverse t))
-  :resource-base (s-url "http://mu.semte.ch/books/")
-  :on-path "authors")
+  :resource-base (s-url "http://mu.semte.ch/school/subjects/")
+  :has-many `((class :via ,(s-prefix "dct:subject")
+                     :as "classes"
+                     :inverse t))
+  :on-path "subjects")
 
-;;
+(define-resource class ()
+  :class (s-prefix "school:Class")
+  :properties `((:name :string ,(s-prefix "dct:title"))
+                (:subject :string ,(s-prefix "dct:subject")))
+  :has-many `((person :via ,(s-prefix "school:teacher")
+                      :as  "teachers")
+              (person :via ,(s-prefix "school:student")
+                      :as  "students")
+              (grade :via ,(s-prefix "school:classGrade")
+                     :as  "grades"))
+  :resource-base (s-url "http://mu.semte.ch/school/classes/")
+  :on-path "classes")
+
+(define-resource grade ()
+  :class (s-prefix "school:Grade")
+  :properties `((:points :number ,(s-prefix "school:gradePoints")))
+  :resource-base (s-url "http://mu.semte.ch/school/grades/")
+  :has-one `((person :via ,(s-prefix "school:gradeRecipient")
+                     :as "student")
+             (class :via ,(s-prefix "school:classGrade")
+                    :as "class"
+                    :inverse t))
+  :on-path "grades")
+

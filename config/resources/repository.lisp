@@ -34,3 +34,11 @@
 (add-prefix "ext" "http://mu.semte.ch/vocabularies/ext/")
 
 (add-prefix "dct" "http://purl.org/dc/terms/")
+
+(add-prefix "school" "http://mu.semte.ch/vocabularies/school/")
+
+(add-prefix "graphs" "http://mu.semte.ch/school/graphs/")
+
+(add-prefix "app" "http://mu.semte.ch/school/")
+
+(add-prefix "xmlns" "http://xmlns.com/foaf/0.1/")

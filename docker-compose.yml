@@ -13,14 +13,19 @@ services:
     volumes:
       - ./config/dispatcher:/config
   as:
-    image: nathanielrb/mu-graph-rewriter:0.4.1
+    image: nathanielrb/mu-graph-rewriter:0.5.0
     links:
       - db:database
     environment:
       MU_DEFAULT_GRAPH: "http://mu.semte.ch/application" # probably unused 
-      PLUGIN_PATH: "/config/access-rights.scm"
+      PLUGIN_PATH: "/config/school-access-personal-graphs.scm"
+      MESSAGE_LOGGING: "true"
+      PRINT_SPARQL_QUERIES: "true"
     volumes:
       - ./config/rewriter:/config
+    ports:
+      - "4005:4005"
+      - "4027:8890"
   db:
     image: tenforce/virtuoso:1.0.0-virtuoso7.2.4
     environment:

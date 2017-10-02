@@ -57,13 +57,14 @@
               realm)
       " GRAPH <http://data.europa.eu/eurostat/graphs> { ?allGraphs a rewriter:Graph } "))
 
-(*constraint*
- (lambda ()
-   (let ((realm (query-graph-realm)))
-     (format (conc "CONSTRUCT { ?s ?p ?o } "
-                   " WHERE { "
-                   " { "
-                   "  SELECT DISTINCT ?graph ?type ?p"
+(define-constraint
+  'read/write
+  (lambda ()
+    (let ((realm (query-graph-realm)))
+      (format (conc "CONSTRUCT { ?s ?p ?o } "
+                    " WHERE { "
+                    " { "
+                    "  SELECT DISTINCT ?graph ?type ?p"
                     " WHERE { "
                     "   GRAPH <http://data.europa.eu/eurostat/graphs> { "
                     "    ?rule a rewriter:GraphRule. "
