@@ -13,8 +13,8 @@ services:
     volumes:
       - ./config/dispatcher:/config
   as:
-    build: ~/projects/eurostat/prototype/mu-graph-rewriter
-    # image: nathanielrb/mu-graph-rewriter:0.5.0
+    # build: ~/code/mu-graph-rewriter
+    image: nathanielrb/mu-graph-rewriter:0.6.0
     links:
       - db:database
     environment:
@@ -23,7 +23,8 @@ services:
       MESSAGE_LOGGING: "true"
       PRINT_SPARQL_QUERIES: "true"
       USE_TEMP: "false"
-      CALCULATE_POTENTIALS: "false"
+      CALCULATE_POTENTIALS: "true"
+      REWRITE_SELECT_QUERIES: "true"
     volumes:
       - ./config/rewriter:/config
     ports:
