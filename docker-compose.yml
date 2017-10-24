@@ -14,7 +14,7 @@ services:
       - ./config/dispatcher:/config
   as:
     # build: ~/code/mu-graph-rewriter
-    image: nathanielrb/mu-graph-rewriter:0.6.0
+    image: nathanielrb/mu-graph-rewriter:0.6.2
     links:
       - db:database
     environment:
@@ -27,6 +27,7 @@ services:
       REWRITE_SELECT_QUERIES: "true"
     volumes:
       - ./config/rewriter:/config
+      - ~/code/mu-graph-rewriter/sandbox:/app/sandbox
     ports:
       - "4005:4005"
       - "4027:8890"
