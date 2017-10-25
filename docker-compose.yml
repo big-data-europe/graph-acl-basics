@@ -14,7 +14,7 @@ services:
       - ./config/dispatcher:/config
   as:
     # build: ~/code/mu-graph-rewriter
-    image: nathanielrb/mu-graph-rewriter:0.6.2
+    image: nathanielrb/mu-graph-rewriter:0.6.3
     links:
       - db:database
     environment:
