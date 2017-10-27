@@ -25,7 +25,7 @@ services:
       - "4028:80"
   as:
     # build: ~/code/mu-graph-rewriter
-    image: nathanielrb/mu-graph-rewriter:0.6.3
+    image: nathanielrb/mu-graph-rewriter:0.6.4
     links:
       - db:database
     environment:
