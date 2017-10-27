@@ -1,0 +1,222 @@
+<html>
+  <head>
+    <title>Constrain Rewriter Sandbox</title>
+    <script type="text/javascript" src="/assets/highlight-lisp/highlight-lisp.js"></script>
+    <link type="text/css" rel="stylesheet" href="/assets/style.css" />
+    <link type="text/css" rel="stylesheet" href="/assets/highlight-lisp/themes/github.css" />
+  </head>
+  <body>
+    <div class="menu">
+      <div class="title">Constraint Rewriter Sandbox</div>
+    </div>
+
+    <div class="row main">
+    <div class="column left">
+
+      <div class="panel constraint" >
+	<h2>Constraints</h2>
+        <p>Use <code>&lt;SESSION_ID&gt;</code> for the <code>MU_SESSION_ID</code> header.</p>
+        <p>Graphs should be variables (use VALUES or BIND when necessary).</p>
+        <h3>Read Constraint</h3>
+	<textarea class="constraint text" id="read-constraint">
+PREFIX graphs: <http://mu.semte.ch/school/graphs/>
+PREFIX school: <http://mu.semte.ch/vocabularies/school/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+
+CONSTRUCT {
+  ?a ?b ?c
+}
+WHERE {
+  GRAPH <http://mu.semte.ch/authorization> {
+    ?session mu:uuid <SESSION_ID>;
+             mu:account ?user.
+  }
+
+  {
+    @access Type(?type)
+    FILTER ( ?type != school:Grade )
+    GRAPH ?graph { 
+      ?a ?b ?c;
+         a ?type
+    }
+  }
+  UNION {
+    @access Grade
+    FILTER ( ?type = school:Grade )
+    GRAPH ?graph { 
+      ?a ?b ?c;
+         a ?type;
+    }
+
+    { 
+      GRAPH graphs:people { ?user school:role "principle" }
+    }
+    UNION {
+      GRAPH graphs:people { ?user school:role "teacher" }
+      GRAPH graphs:classes {
+        ?class school:hasTeacher ?user;
+               school:classGrade ?a
+      }
+    }
+    UNION {
+      GRAPH graphs:people { ?user school:role "student" }
+      GRAPH graphs:grades { ?a school:gradeRecipient ?user }
+    }
+  }
+  VALUES (?graph ?type) {
+    (graphs:grades school:Grade)
+    (graphs:subjects school:Subject) 
+    (graphs:classes school:Class) 
+    (graphs:people foaf:Person) 
+  }
+}</textarea> 
+
+</div>
+      <div class="panel constraint">
+	<h3>Write Constraint <small><input checked=true type="checkbox" id="read-write"/>Same as Read Constraint</small></h3>
+	<textarea class="constraint text" id="write-constraint" disabled=true>
+        </textarea>
+      </div>
+      <div class="panel">
+	<h3>Optimizations</h3>
+	<h4>Functional properties</h4><p>Comma- or space-separated list</p><p> <input type="text" id="fprops" value="rdf:type"/></p>
+      </div>
+    </div>
+    <div class="column middle">
+      <div class="panel">
+        <h2>Queries</h2>
+      </div>
+      <div class="panel auth">
+        <h3>Authorization and Login</h3>
+        <p> </p>
+        <pre>
+INSERT DATA {
+  GRAPH &lt;http://mu.semte.ch/authorization&gt; {
+</pre>
+        <textarea class="auth text" id="authorization-insert">
+<session/0> mu:uuid "session0";
+            mu:account <http://mu.semte.ch/users/principle>.
+
+<session/1> mu:uuid "session1";
+            mu:account <http://mu.semte.ch/users/teacher1>.
+
+<session/2> mu:uuid "session2";
+            mu:account <http://mu.semte.ch/users/student1>.
+        </textarea>
+        <pre>
+  }
+}</pre>
+      </div> <!-- .panel -->
+
+      <div class="panel query">
+        <h3>Query <small><code>MU_SESSION_ID: </code> <select id="session-id"><option>session0</option><option>session1</option><option>session2</option></select> <button name="rewrite" id="rewrite">Rewrite</button></small></h3>
+        <textarea id="query">
+SELECT ?s ?name
+WHERE {
+  ?s a foaf:Person;
+     foaf:name ?name
+}
+        </textarea>
+      </div> <!-- .panel -->
+      <div class="panel" id="result-panel">
+        <h3>Rewritten Query <small><button name="run" id="run" disabled=true>Run</button></small></h3>
+        <div class="panel-box">
+          <pre id="result"></pre>
+        </div><!-- .panel-box -->
+      </div><!-- .panel.result -->
+
+      <div class="panel">
+          <div id="annotations-box">
+            <h3>Query Annotations</h3>
+            <ul id="annotations"></ul>
+            <h3>Queried Annotations</h3>
+            <ul id="queried-annotations"></ul>
+          </div>
+    </div> <!-- .panel -->
+      <div class="panel results" id="results-panel">
+        <h3>Query Results</h3>
+        <textarea id="results" disabled=true></textarea>
+      </div> <!-- .panel.results -->
+    </div>  <!-- .column.middle -->
+
+        <div class="column right">
+          <div class="panel">
+            <h2>Model</h2>
+            <h3>Apply Constraints</h3>
+            <p>Load current read and write constraints and clear the triplestore.</p>
+            <p><button name="model" id="apply">Apply</button> <span id="apply-message"></span> </p>        
+            <h3>Generate Model</h3>
+            <p>Generate random data according to school model (below). <br/>
+              Users will have the following pre-defined roles and URIs:</p>
+            <ul>
+              <li>"principle": <code>&lt;http://mu.semte.ch/users/principle&gt;</code></li>
+              <li>"teacher": <code>&lt;http://mu.semte.ch/users/teacher1&gt;</code> ...</li>
+              <li>"student": <code>&lt;http://mu.semte.ch/users/student1&gt;</code> ...</li>
+            </ul>
+            <p><button name="model" id="generate">Generate</button> <span id="generate-message"></span> <a id="preview" href="/preview">Sample Application &raquo;</a></p>        
+
+          </div> <!-- .panel -->
+          <div class="panel">
+            <h3><a id="toggle-domain">domain.lisp</a></h3>
+            <pre id="domain"><code class="lisp">
+(define-resource person ()
+  :class (s-prefix "foaf:Person")
+  :properties `((:name :string ,(s-prefix "foaf:name"))
+                (:email :string ,(s-prefix "foaf:mbox"))
+                (:role :string ,(s-prefix "school:role")))
+  :has-many `((class :via ,(s-prefix "school:hasTeacher")
+                             :as "classesTaught"
+                             :inverse t)
+              (class :via ,(s-prefix "school:hasStudent")
+                            :as "classesTaken"
+                            :inverse t)
+              (grade :via ,(s-prefix "gradeRecipient")
+                      :as "earnedGrades"
+                      :inverse t))
+  :resource-base (s-url "http://mu.semte.ch/school/people/")
+  :on-path "people")
+
+(define-resource subject ()
+  :class (s-prefix "school:Subject")
+  :properties `((:name :string ,(s-prefix "dct:title")))
+  :resource-base (s-url "http://mu.semte.ch/school/subjects/")
+  :has-many `((class :via ,(s-prefix "dct:subject")
+                     :as "classes"
+                     :inverse t))
+  :on-path "subjects")
+
+(define-resource class ()
+  :class (s-prefix "school:Class")
+  :properties `((:name :string ,(s-prefix "dct:title"))
+                (:subject :string ,(s-prefix "dct:subject")))
+  :has-many `((person :via ,(s-prefix "school:teacher")
+                      :as  "teachers")
+              (person :via ,(s-prefix "school:student")
+                      :as  "students")
+              (grade :via ,(s-prefix "school:classGrade")
+                     :as  "grades"))
+  :resource-base (s-url "http://mu.semte.ch/school/classes/")
+  :on-path "classes")
+
+(define-resource grade ()
+  :class (s-prefix "school:Grade")
+  :properties `((:points :number ,(s-prefix "school:gradePoints")))
+  :resource-base (s-url "http://mu.semte.ch/school/grades/")
+  :has-one `((person :via ,(s-prefix "school:gradeRecipient")
+                     :as "student")
+             (class :via ,(s-prefix "school:classGrade")
+                    :as "class"
+                    :inverse t))
+  :on-path "grades")
+            </code></pre>
+          </div>
+          <br style="clear"/>  
+        </div>
+    </div>
+    <script type="text/javascript" src="/assets/sandbox.js"></script>
+    <script type="text/javascript">
+      HighlightLisp.highlight_auto({className: 'lisp'});
+    </script>
+  </body>
+</html>
+
