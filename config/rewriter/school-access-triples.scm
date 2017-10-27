@@ -74,7 +74,8 @@
                 "  }"
                 "}")))))
 
-(define-namespace dct "http://purl.org/dc/terms/title")
+(define-namespace dct "http://purl.org/dc/terms/")
+
 ;; (define-constraint
 ;;   'read/write
 ;;   (conc "CONSTRUCT {"

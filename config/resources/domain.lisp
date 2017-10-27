@@ -58,9 +58,9 @@
 
 
 (define-resource person ()
-  :class (s-prefix "xmlns:Person")
-  :properties `((:name :string ,(s-prefix "xmlns:name"))
-                (:email :string ,(s-prefix "xmlns:mbox"))
+  :class (s-prefix "foaf:Person")
+  :properties `((:name :string ,(s-prefix "foaf:name"))
+                (:email :string ,(s-prefix "foaf:mbox"))
                 (:role :string ,(s-prefix "school:role")))
   :has-many `((class :via ,(s-prefix "school:hasTeacher")
                              :as "classesTaught"

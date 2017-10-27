@@ -26,8 +26,12 @@ defmodule Dispatcher do
     Proxy.forward conn, path, "http://resource/"
   end
 
-  match "/rewriter/*path" do
+  match "/as/*path" do
     Proxy.forward conn, path, "http://as:8890/"
+  end
+
+  match "/generator/*path" do
+    Proxy.forward conn, path, "http://generator/"
   end
 
   match _ do

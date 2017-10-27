@@ -41,4 +41,4 @@
 
 (add-prefix "app" "http://mu.semte.ch/school/")
 
-(add-prefix "xmlns" "http://xmlns.com/foaf/0.1/")
+(add-prefix "foaf" "http://xmlns.com/foaf/0.1/")
