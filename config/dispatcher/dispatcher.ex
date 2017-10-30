@@ -34,6 +34,10 @@ defmodule Dispatcher do
     Proxy.forward conn, path, "http://generator/"
   end
 
+  match "/preview/*path" do
+    Proxy.forward conn, path, "http://preview/"
+  end
+
   match _ do
     send_resp( conn, 404, "Route not found.  See config/dispatcher.ex" )
   end

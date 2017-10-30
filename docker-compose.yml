@@ -24,7 +24,6 @@ services:
     ports:
       - "4028:80"
   as:
-    # build: ~/code/mu-graph-rewriter
     image: nathanielrb/mu-graph-rewriter:0.6.4
     links:
       - db:database
@@ -42,6 +41,14 @@ services:
     ports:
       - "4005:4005"
       - "4027:8890"
+  generator:
+    build: ./random-data-generator
+    links:
+      - as:database
+    volumes:
+      - ./random-data-generator:/app
+    ports:
+      - "4030:80"
   db:
     image: tenforce/virtuoso:1.0.0-virtuoso7.2.4
     environment:

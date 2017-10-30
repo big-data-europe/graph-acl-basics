@@ -66,7 +66,6 @@ button.onclick = function(){
             annotationsBox.style.display = 'none';
 
 	    if(request.status === 200) { 
-		console.log('200');
 		var jr = JSON.parse(e.target.responseText);
 		resultPanelBox.className = 'panel-box filled';
                 rwquery =  jr.rewrittenQuery.trim();
@@ -122,8 +121,9 @@ button.onclick = function(){
 // run rewritten query
 runButton.onclick = function(){
     if( !rwquery )
-	return 1;
+	return -1;
     else {
+	results.value = '';
 	var request = new XMLHttpRequest();
 	request.onreadystatechange = function(e) {
 	    if(request.readyState === 4) {
@@ -151,13 +151,6 @@ applyButton.onclick = function(){
     var request = new XMLHttpRequest();
     request.onreadystatechange = function(e) {
 	if(request.readyState === 4) {
-            result.className = '';
-	    results.value = '';
-            resultsPanel.style.display = "none";
-            annotations.innerHTML = '';
-            queriedAnnotations.innerHTML = '';
-            annotationsBox.style.display = 'none';
-
 	    if(request.status === 200) { 
 		console.log('200');
                 jr = JSON.parse(e.target.responseText);
@@ -180,16 +173,7 @@ generateButton.onclick = function(){
     var request = new XMLHttpRequest();
     request.onreadystatechange = function(e) {
 	if(request.readyState === 4) {
-            result.className = '';
-	    results.value = '';
-            resultsPanel.style.display = "none";
-            annotations.innerHTML = '';
-            queriedAnnotations.innerHTML = '';
-            annotationsBox.style.display = 'none';
-
 	    if(request.status === 200) { 
-		console.log('200');
-                jr = JSON.parse(e.target.responseText);
                 generateMessage.style.display = "inline";
                 generateMessage.innerHTML = 'Model generated.';
                 previewLink.style.display="inline";
@@ -199,7 +183,7 @@ generateButton.onclick = function(){
 	    } 
 	}
     }
-    request.open("POST", "/as/generate", true);
+    request.open("POST", "/generator/generate", true);
     request.send("&readconstraint=" + escape(readConstraint.value)
                  + "&writeconstraint=" + escape((readwrite.checked ? readConstraint.value : writeConstraint.value))
                  + "&fprops=" + fprops.value
