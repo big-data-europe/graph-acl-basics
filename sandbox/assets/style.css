@@ -188,3 +188,13 @@ textarea {
 #domain {
     display: none;
 }
+.help {
+    cursor: default;
+    background: #424;
+    color: #fff;
+    display: inline-block;
+    font-size: small;
+    border-radius: 9px;
+    width: 9px;
+    padding: 0 2px;
+}

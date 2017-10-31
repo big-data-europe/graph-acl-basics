@@ -17,6 +17,7 @@
 	<h2>Constraints</h2>
         <p>Use <code>&lt;SESSION_ID&gt;</code> for the <code>MU_SESSION_ID</code> header.</p>
         <p>Graphs should be variables (use VALUES or BIND when necessary).</p>
+        <p>Annotations can take the form <code>@access Label</code> or <code>@access Label(?var)</code>, and are parsed as Quad blocks (<a href="https://www.w3.org/TR/sparql11-query/#rGraphPatternNotTriples">GraphPatternNotTriples</a>).
         <h3>Read Constraint</h3>
 	<textarea class="constraint text" id="read-constraint">
 PREFIX graphs: <http://mu.semte.ch/school/graphs/>
@@ -79,7 +80,12 @@ WHERE {
       </div>
       <div class="panel">
 	<h3>Optimizations</h3>
-	<h4>Functional properties</h4><p>Comma- or space-separated list</p><p> <input type="text" id="fprops" value="rdf:type"/></p>
+	<h4>Unique Variables <span class="help" title="Will not be rewritten. Comma- or space-separated list.">?</span></h4>
+        
+        <p> <input type="text" id="uvs" value="?session, ?user"/></p>
+	
+        <h4>Functional properties <span class="help" title="Comma- or space-separated list.">?</span></h4>
+        <p> <input type="text" id="fprops" value="rdf:type"/></p>
       </div>
     </div>
     <div class="column middle">

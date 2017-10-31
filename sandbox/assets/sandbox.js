@@ -12,6 +12,7 @@ var readConstraint = document.getElementById('read-constraint');
 var writeConstraint = document.getElementById('write-constraint');
 var readwrite = document.getElementById('read-write');
 var fprops = document.getElementById('fprops');
+var uvs = document.getElementById('uvs');
 var resultPanelBox = document.querySelector('.panel-box');
 var resultPanel = document.getElementById('result-panel');
 var result = document.getElementById('result');
@@ -114,6 +115,7 @@ button.onclick = function(){
                  + "&readconstraint=" + escape(readConstraint.value)
                  + "&writeconstraint=" + escape((readwrite.checked ? readConstraint.value : writeConstraint.value))
                  + "&fprops=" + escape(fprops.value)
+                 + "&uvs=" + escape(uvs.value)
                  + "&session-id=" + escape(sessionID.value)
                 + "&authorization-insert=" + escape(authorizationInsert.value));
 };
@@ -164,7 +166,8 @@ applyButton.onclick = function(){
     request.open("POST", "/as/apply", true);
     request.send("&readconstraint=" + escape(readConstraint.value)
                  + "&writeconstraint=" + escape((readwrite.checked ? readConstraint.value : writeConstraint.value))
-                 + "&fprops=" + fprops.value
+                 + "&fprops=" + escape(fprops.value)
+                 + "&uvs=" + escape(uvs.value)
                  + "&session-id=" + sessionID.value
                  + "&authorization-insert=" + authorizationInsert.value);
 };
@@ -187,6 +190,7 @@ generateButton.onclick = function(){
     request.send("&readconstraint=" + escape(readConstraint.value)
                  + "&writeconstraint=" + escape((readwrite.checked ? readConstraint.value : writeConstraint.value))
                  + "&fprops=" + fprops.value
+                 + "&uvs=" + escape(uvs.value)
                  + "&session-id=" + sessionID.value
                  + "&authorization-insert=" + authorizationInsert.value);
 };
