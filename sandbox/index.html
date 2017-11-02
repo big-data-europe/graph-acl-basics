@@ -14,10 +14,11 @@
     <div class="column left">
 
       <div class="panel constraint" >
-	<h2>Constraints</h2>
-        <p>Use <code>&lt;SESSION_ID&gt;</code> for the <code>MU_SESSION_ID</code> header.</p>
-        <p>Graphs should be variables (use VALUES or BIND when necessary).</p>
-        <p>Annotations can take the form <code>@access Label</code> or <code>@access Label(?var)</code>, and are parsed as Quad blocks (<a href="https://www.w3.org/TR/sparql11-query/#rGraphPatternNotTriples">GraphPatternNotTriples</a>).
+	<h2>Constraints
+     
+<span class="help" title="Use SESSION_ID for the mu-session-id header.&#013;&#013;Graphs containing the matched triple  _?a ?b ?c_  should be variables.&#013;Use VALUES or BIND when necessary.&#013;&#013;Cache annotations can take the form  _@access Label_  or  _@access Label(?var)_ ,&#013;and are parsed as Quad blocks (GraphPatternNotTriples).">?</span>
+        </h2>
+        <p> <select id="plugins"><option></option></select>  <button id="clear-plugin">Clear</button> <button id="save-plugin">Save</button> <button id="save-plugin-as" disabled=true>Save As</button>  </p>
         <h3>Read Constraint</h3>
 	<textarea class="constraint text" id="read-constraint">
 PREFIX graphs: <http://mu.semte.ch/school/graphs/>
@@ -80,7 +81,7 @@ WHERE {
       </div>
       <div class="panel">
 	<h3>Optimizations</h3>
-	<h4>Unique Variables <span class="help" title="Will not be rewritten. Comma- or space-separated list.">?</span></h4>
+	<h4>Unique Variables <span class="help" title="These variables will not be rewritten.&#013;&#013;Comma- or space-separated list.">?</span></h4>
         
         <p> <input type="text" id="uvs" value="?session, ?user"/></p>
 	
@@ -115,7 +116,7 @@ INSERT DATA {
       </div> <!-- .panel -->
 
       <div class="panel query">
-        <h3>Query <small><code>MU_SESSION_ID: </code> <select id="session-id"><option>session0</option><option>session1</option><option>session2</option></select> <button name="rewrite" id="rewrite">Rewrite</button></small></h3>
+        <h3>Query <small><code>mu-session-id: </code> <select id="session-id"><option>session0</option><option>session1</option><option>session2</option></select> <button name="rewrite" id="rewrite">Rewrite</button></small></h3>
         <textarea id="query">
 SELECT ?s ?name
 WHERE {
@@ -152,13 +153,15 @@ WHERE {
             <p>Load current read and write constraints and clear the triplestore.</p>
             <p><button name="model" id="apply">Apply</button> <span id="apply-message"></span> </p>        
             <h3>Generate Model</h3>
-            <p>Generate random data according to school model (below). <br/>
+            <p>Generate random data according to school model (below), <br/>
+              with the header <code>mu-session-id: session0</code>. <br/>
               Users will have the following pre-defined roles and URIs:</p>
             <ul>
               <li>"principle": <code>&lt;http://mu.semte.ch/users/principle&gt;</code></li>
               <li>"teacher": <code>&lt;http://mu.semte.ch/users/teacher1&gt;</code> ...</li>
               <li>"student": <code>&lt;http://mu.semte.ch/users/student1&gt;</code> ...</li>
             </ul>
+            <p></p>
             <p><button name="model" id="generate">Generate</button> <span id="generate-message"></span> <a id="preview" href="/preview">Sample Application &raquo;</a></p>        
 
           </div> <!-- .panel -->
