@@ -16,7 +16,7 @@
       <div class="panel constraint" >
 	<h2>Constraints
      
-<span class="help" title="Use SESSION_ID for the mu-session-id header.&#013;&#013;Graphs containing the matched triple  _?a ?b ?c_  should be variables.&#013;Use VALUES or BIND when necessary.&#013;&#013;Cache annotations can take the form  _@access Label_  or  _@access Label(?var)_ ,&#013;and are parsed as Quad blocks (GraphPatternNotTriples).">?</span>
+<span class="help" title="Use <SESSION> for the mu-session-id header.&#013;&#013;Graphs containing the matched triple  _?a ?b ?c_  should be variables.&#013;Use VALUES or BIND when necessary.&#013;&#013;Cache annotations can take the form  _@access Label_  or  _@access Label(?var)_ ,&#013;and are parsed as Quad blocks (GraphPatternNotTriples).">?</span>
         </h2>
         <p> <select id="plugins"><option></option></select>  <button id="clear-plugin">Clear</button> <button id="save-plugin">Save</button> <button id="save-plugin-as" disabled=true>Save As</button>  </p>
         <h3>Read Constraint</h3>
@@ -62,18 +62,21 @@
 <!--       </div> <\!-- .panel -\-> -->
 
       <div class="panel query">
-        <h3>Query 
-          <!-- <small>>mu-session-id: </code> <select id="session-id"><option>&lt;session/0&gt;</option><option>&lt;session/1&gt;</option><option>&lt;session/2&gt;</option></select> <button name="rewrite" id="rewrite">Rewrite</button></small> -->
-          <small>
-            as user:
+        <h3>Authorization</h3>
+          <p>
+            Run queries as user:
             <select id="authorization-user">
               <option>http://mu.semte.ch/users/principle</option>
               <option>http://mu.semte.ch/users/teacher1</option>
               <option>http://mu.semte.ch/users/student1</option>
-            </select>
-            <button name="rewrite" id="rewrite">Rewrite</button>
-          </small>
-</h3>
+            </select>      
+          </p>
+      </div>
+
+      <div class="panel query">
+        <h3>Query <small><button name="rewrite" id="rewrite">Rewrite</button></small></h3>
+          <!-- <small>>mu-session-id: </code> <select id="session-id"><option>&lt;session/0&gt;</option><option>&lt;session/1&gt;</option><option>&lt;session/2&gt;</option></select> <button name="rewrite" id="rewrite">Rewrite</button></small> -->
+
         <textarea id="query">
 SELECT ?s ?name
 WHERE {

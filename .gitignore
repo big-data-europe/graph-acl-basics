@@ -8,3 +8,5 @@
 /data/db/virtuoso.log
 /data/db/virtuoso.pxa
 /data/db/virtuoso.trx
+
+node_modules

@@ -14,7 +14,7 @@ CONSTRUCT {
 }
 WHERE {
  GRAPH <http://mu.semte.ch/authorization> {
-  <SESSION_ID> mu:account ?user.
+  <SESSION> mu:account ?user.
  }
  {
   @access Type(?type)
