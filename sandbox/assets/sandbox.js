@@ -26,8 +26,9 @@ var rwquery = false;
 var annotationsBox = document.getElementById('annotations-box');
 var annotations = document.getElementById('annotations');
 var queriedAnnotations = document.getElementById('queried-annotations');
-var authorizationInsert = document.getElementById('authorization-insert');
-var sessionID = document.getElementById('session-id');
+// var authorizationInsert = document.getElementById('authorization-insert');
+var authorizationUser = document.getElementById('authorization-user');
+// var sessionID = document.getElementById('session-id');
 var domainButton = document.getElementById('toggle-domain');
 var domain = document.getElementById('domain');
 
@@ -52,9 +53,9 @@ var Req = function(method, path, succeed, fail){
     return request;
 }
 
-var withAuth = function(cb){
+var withAuth = function(user, cb){
     var request = Req("POST", "/as/auth", cb, function(){ alert('Error inserting authorization triples') });
-    request.send("authorization-insert=" + escape(authorizationInsert.value));
+    request.send("user=" + escape(user));
 }
 
 
@@ -79,8 +80,9 @@ domainButton.onclick = function() {
 
 // rewrite query
 button.onclick = function(){
-    withAuth(function(){
-        var request = Req("POST","/as/sandbox",
+    withAuth(authorizationUser.value,
+             function(){
+                 var request = Req("POST","/as/sandbox",
                           function(jr){
                               result.className = '';
 	                      results.value = '';
@@ -142,7 +144,8 @@ button.onclick = function(){
                      + "&writeconstraint=" + escape((readwrite.checked ? readConstraint.value : writeConstraint.value))
                      + "&fprops=" + escape(fprops.value)
                      + "&uvs=" + escape(uvs.value)
-                     + "&session-id=" + escape(sessionID.value));
+                     //+ "&session-id=" + escape(sessionID.value)
+                    );
     });
 };
 
@@ -151,23 +154,24 @@ runButton.onclick = function(){
     if( !rwquery )
 	return -1;
     else {
-        withAuth(function(){        
-	    results.value = '';
+        withAuth(authorizationUser.value,
+                 function(){        
+	             results.value = '';
 
-            var request = Req("POST", "/as/proxy",
-                              function(jr){
-		                  results.className = 'filled';
-		                  results.value = JSON.stringify(jr.results.bindings, null, 2);
-                                  resultsPanel.style.display = "block";
-                                  location.hash = '#results-panel';
-                                  resize(results)();
-                              },
-                              function(){
-                                  results.value = 'Error';
-		                  results.className = 'error';
-                              });
-	    request.send(rwquery);
-        });
+                     var request = Req("POST", "/as/proxy",
+                                       function(jr){
+		                           results.className = 'filled';
+		                           results.value = JSON.stringify(jr.results.bindings, null, 2);
+                                           resultsPanel.style.display = "block";
+                                           location.hash = '#results-panel';
+                                           resize(results)();
+                                       },
+                                       function(){
+                                           results.value = 'Error';
+		                           results.className = 'error';
+                                       });
+	             request.send(rwquery);
+                 });
     }
 };
 
@@ -185,29 +189,31 @@ applyButton.onclick = function(){
                  + "&writeconstraint=" + escape((readwrite.checked ? readConstraint.value : writeConstraint.value))
                  + "&fprops=" + escape(fprops.value)
                  + "&uvs=" + escape(uvs.value)
-                 + "&session-id=" + sessionID.value);
+                 //+ "&session-id=" + sessionID.value
+                );
 };
 
 generateButton.onclick = function(){
     var request = Req("DELETE", "/as/clear",
                       function(jr){
-                          withAuth(function(){
-                              var request = Req("POST", "/generator/generate",
-                                                function(jr){
-                                                    generateMessage.style.display = "inline";
-                                                    generateMessage.innerHTML = 'Model generated.';
-                                                    previewLink.style.display="inline";
-                                                },
-                                                function(){
-                                                    previewLink.style.display="none";
-                                                    generateMessage.innerHTML = 'Error generating model.';
-                                                });
-                              request.send("&readconstraint=" + escape(readConstraint.value)
-                                           + "&writeconstraint=" + escape((readwrite.checked ? readConstraint.value : writeConstraint.value))
-                                           + "&fprops=" + fprops.value
-                                           + "&uvs=" + escape(uvs.value)
-                                           + "&session-id=" + sessionID.value);
-                          });
+                          withAuth("http://mu.semte.ch/users/principle",
+                                   function(){
+                                       var request = Req("POST", "/generator/generate",
+                                                         function(jr){
+                                                             generateMessage.style.display = "inline";
+                                                             generateMessage.innerHTML = 'Model generated.';
+                                                             previewLink.style.display="inline";
+                                                         },
+                                                         function(){
+                                                             previewLink.style.display="none";
+                                                             generateMessage.innerHTML = 'Error generating model.';
+                                                         });
+                                       request.send("&readconstraint=" + escape(readConstraint.value)
+                                                    + "&writeconstraint=" + escape((readwrite.checked ? readConstraint.value : writeConstraint.value))
+                                                    + "&fprops=" + fprops.value
+                                                    + "&uvs=" + escape(uvs.value)
+                                                   );
+                                   })
                       },
                       function(){
                           previewLink.style.display="none";
@@ -326,7 +332,7 @@ var clear = function(){
         + "}\n"
         + "WHERE {\n"
         + " @access Type(?type)\n"
-        + " GRAPH ?g {\n"
+        + " GRAPH ?graph {\n"
         + "   ?a ?b ?c;\n"
         + "      a ?type\n"
         + " }\n"

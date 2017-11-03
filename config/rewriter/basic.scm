@@ -10,19 +10,19 @@ PREFIX school: <http://mu.semte.ch/vocabularies/school/>
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>
 
 CONSTRUCT {
-  ?a ?b ?c
+ ?a ?b ?c.
 }
 WHERE {
  @access Type(?type)
- GRAPH ?g {
-   ?a ?b ?c;
-      a ?type
+ GRAPH ?graph {
+  ?a ?b ?c.
+  ?a rdf:type ?type.
  }
- VALUES (?graph ?type) {
-    (graphs:grades school:Grade)
-    (graphs:subjects school:Subject) 
-    (graphs:classes school:Class) 
-    (graphs:people foaf:Person) 
-  }
+ VALUES (?graph ?type) { 
+  (graphs:grades school:Grade) 
+  (graphs:subjects school:Subject) 
+  (graphs:classes school:Class) 
+  (graphs:people foaf:Person) 
+ }
 }  "))
 

@@ -20,58 +20,7 @@
         </h2>
         <p> <select id="plugins"><option></option></select>  <button id="clear-plugin">Clear</button> <button id="save-plugin">Save</button> <button id="save-plugin-as" disabled=true>Save As</button>  </p>
         <h3>Read Constraint</h3>
-	<textarea class="constraint text" id="read-constraint">
-PREFIX graphs: <http://mu.semte.ch/school/graphs/>
-PREFIX school: <http://mu.semte.ch/vocabularies/school/>
-PREFIX foaf: <http://xmlns.com/foaf/0.1/>
-
-CONSTRUCT {
-  ?a ?b ?c
-}
-WHERE {
-  GRAPH <http://mu.semte.ch/authorization> {
-    ?session mu:uuid <SESSION_ID>;
-             mu:account ?user.
-  }
-
-  {
-    @access Type(?type)
-    FILTER ( ?type != school:Grade )
-    GRAPH ?graph { 
-      ?a ?b ?c;
-         a ?type
-    }
-  }
-  UNION {
-    @access Grade
-    FILTER ( ?type = school:Grade )
-    GRAPH ?graph { 
-      ?a ?b ?c;
-         a ?type;
-    }
-
-    { 
-      GRAPH graphs:people { ?user school:role "principle" }
-    }
-    UNION {
-      GRAPH graphs:people { ?user school:role "teacher" }
-      GRAPH graphs:classes {
-        ?class school:hasTeacher ?user;
-               school:classGrade ?a
-      }
-    }
-    UNION {
-      GRAPH graphs:people { ?user school:role "student" }
-      GRAPH graphs:grades { ?a school:gradeRecipient ?user }
-    }
-  }
-  VALUES (?graph ?type) {
-    (graphs:grades school:Grade)
-    (graphs:subjects school:Subject) 
-    (graphs:classes school:Class) 
-    (graphs:people foaf:Person) 
-  }
-}</textarea> 
+	<textarea class="constraint text" id="read-constraint"></textarea> 
 
 </div>
       <div class="panel constraint">
@@ -93,30 +42,38 @@ WHERE {
       <div class="panel">
         <h2>Queries</h2>
       </div>
-      <div class="panel auth">
-        <h3>Authorization and Login</h3>
-        <p> </p>
-        <pre>
-INSERT DATA {
-  GRAPH &lt;http://mu.semte.ch/authorization&gt; {
-</pre>
-        <textarea class="auth text" id="authorization-insert">
-<session/0> mu:uuid "session0";
-            mu:account <http://mu.semte.ch/users/principle>.
+<!--       <div class="panel auth"> -->
+<!--         <h3>Authorization and Login</h3> -->
+<!--         <p> </p> -->
+<!--         <pre> -->
+<!-- INSERT DATA { -->
+<!--   GRAPH &lt;http://mu.semte.ch/authorization&gt; { -->
+<!-- </pre> -->
+<!--         <textarea class="auth text" id="authorization-insert"> -->
+<!-- <session/0> mu:account <http://mu.semte.ch/users/principle>. -->
 
-<session/1> mu:uuid "session1";
-            mu:account <http://mu.semte.ch/users/teacher1>.
+<!-- <session/1> mu:account <http://mu.semte.ch/users/teacher1>. -->
 
-<session/2> mu:uuid "session2";
-            mu:account <http://mu.semte.ch/users/student1>.
-        </textarea>
-        <pre>
-  }
-}</pre>
-      </div> <!-- .panel -->
+<!-- <session/2> mu:account <http://mu.semte.ch/users/student1>. -->
+<!--         </textarea> -->
+<!--         <pre> -->
+<!--   } -->
+<!-- }</pre> -->
+<!--       </div> <\!-- .panel -\-> -->
 
       <div class="panel query">
-        <h3>Query <small><code>mu-session-id: </code> <select id="session-id"><option>session0</option><option>session1</option><option>session2</option></select> <button name="rewrite" id="rewrite">Rewrite</button></small></h3>
+        <h3>Query 
+          <!-- <small>>mu-session-id: </code> <select id="session-id"><option>&lt;session/0&gt;</option><option>&lt;session/1&gt;</option><option>&lt;session/2&gt;</option></select> <button name="rewrite" id="rewrite">Rewrite</button></small> -->
+          <small>
+            as user:
+            <select id="authorization-user">
+              <option>http://mu.semte.ch/users/principle</option>
+              <option>http://mu.semte.ch/users/teacher1</option>
+              <option>http://mu.semte.ch/users/student1</option>
+            </select>
+            <button name="rewrite" id="rewrite">Rewrite</button>
+          </small>
+</h3>
         <textarea id="query">
 SELECT ?s ?name
 WHERE {
