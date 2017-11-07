@@ -24,7 +24,7 @@ services:
     ports:
       - "4028:80"
   as:
-    image: nathanielrb/mu-graph-rewriter:0.8.0
+    image: nathanielrb/mu-graph-rewriter:0.8.1
     links:
       - db:database
     environment:
