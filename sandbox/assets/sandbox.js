@@ -8,9 +8,10 @@ var button = document.getElementById('rewrite');
 var runButton = document.getElementById('run');
 var applyButton = document.getElementById('apply');
 var applyMessage = document.getElementById('apply-message');
+var clearButton = document.getElementById('clear');
+var clearMessage = document.getElementById('clear-message');
 var generateButton = document.getElementById('generate');
 var generateMessage = document.getElementById('generate-message');
-var previewLink =  document.getElementById('preview');
 var query = document.getElementById('query');
 var readConstraint = document.getElementById('read-constraint');
 var writeConstraint = document.getElementById('write-constraint');
@@ -193,34 +194,36 @@ applyButton.onclick = function(){
                 );
 };
 
-generateButton.onclick = function(){
+clearButton.onclick = function(){
     var request = Req("DELETE", "/as/clear",
                       function(jr){
-                          withAuth("http://mu.semte.ch/users/principle",
-                                   function(){
-                                       var request = Req("POST", "/generator/generate",
-                                                         function(jr){
-                                                             generateMessage.style.display = "inline";
-                                                             generateMessage.innerHTML = 'Model generated.';
-                                                             previewLink.style.display="inline";
-                                                         },
-                                                         function(){
-                                                             previewLink.style.display="none";
-                                                             generateMessage.innerHTML = 'Error generating model.';
-                                                         });
-                                       request.send("&readconstraint=" + escape(readConstraint.value)
-                                                    + "&writeconstraint=" + escape((readwrite.checked ? readConstraint.value : writeConstraint.value))
-                                                    + "&fprops=" + fprops.value
-                                                    + "&uvs=" + escape(uvs.value)
-                                                   );
-                                   })
+                          clearMessage.style.display = "inline";
+                          clearMessage.innerHTML = 'Data cleared.';
                       },
                       function(){
-                          previewLink.style.display="none";
-                          generateMessage.innerHTML = 'Error generating model.';
+                          clearMessage.innerHTML = 'Error clearing data.';
                       });
 
     request.send();
+};
+
+generateButton.onclick = function(){
+    withAuth("http://mu.semte.ch/users/principle",
+             function(){
+                 var request = Req("POST", "/generator/generate",
+                                   function(jr){
+                                       generateMessage.style.display = "inline";
+                                       generateMessage.innerHTML = 'Model generated.';
+                                   },
+                                   function(){
+                                       generateMessage.innerHTML = 'Error generating model.';
+                                   });
+                 request.send("&readconstraint=" + escape(readConstraint.value)
+                              + "&writeconstraint=" + escape((readwrite.checked ? readConstraint.value : writeConstraint.value))
+                              + "&fprops=" + fprops.value
+                              + "&uvs=" + escape(uvs.value)
+                             );
+             });
 };
 
 var observe;

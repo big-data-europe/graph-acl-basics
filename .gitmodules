@@ -1,3 +1,12 @@
 [submodule "random-data-generator"]
 	path = random-data-generator
 	url = https://github.com/nathanielrb/random-data-generator.git
+[submodule "config/rewriter/rewriter-sandbox-application"]
+	path = config/rewriter/rewriter-sandbox-application
+	url = https://github.com/asjongers/rewriter-sandbox-application.git
+[submodule "rewriter-sandbox-application"]
+	path = rewriter-sandbox-application
+	url = https://github.com/asjongers/rewriter-sandbox-application.git
+[submodule "mu-cl-resources"]
+	path = mu-cl-resources
+	url = https://github.com/mu-semtech/mu-cl-resources.git

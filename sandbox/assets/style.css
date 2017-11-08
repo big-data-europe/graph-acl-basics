@@ -1,3 +1,20 @@
+@font-face {
+  font-family: 'Source Sans Pro';
+  font-weight: 300;
+  font-style: normal;
+  src: url("fonts/Source-Sans-Pro-300/Source-Sans-Pro-300.woff2") format("woff2"), url("fonts/Source-Sans-Pro-300/Source-Sans-Pro-300.woff") format("woff"), url("fonts/Source-Sans-Pro-300/Source-Sans-Pro-300.ttf") format("truetype"); }
+
+@font-face {
+  font-family: 'Source Sans Pro';
+  font-weight: 400;
+  font-style: normal;
+  src: url("fonts/Source-Sans-Pro-regular/Source-Sans-Pro-regular.woff2") format("woff2"), url("fonts/Source-Sans-Pro-regular/Source-Sans-Pro-regular.woff") format("woff"), url("fonts/Source-Sans-Pro-regular/Source-Sans-Pro-regular.ttf") format("truetype"); }
+
+@font-face {
+  font-family: 'Source Sans Pro';
+  font-weight: 700;
+  font-style: normal;
+  src: url("fonts/Source-Sans-Pro-700/Source-Sans-Pro-700.woff2") format("woff2"), url("fonts/Source-Sans-Pro-700/Source-Sans-Pro-700.woff") format("woff"), url("fonts/Source-Sans-Pro-700/Source-Sans-Pro-700.ttf") format("truetype"); }
 html {
     height: 100%;
 }
@@ -8,14 +25,21 @@ body {
     color: #666;
     background: #eee;
 }
+a {
+    color: #424;
+}
 .menu {
     width: 96.6%;
     margin: 0;
-    padding: 20px 1.7%;
+    padding: 14px 1.7%;
     font-size: 16px;
     font-weight: bold;
     color: white;
     background: #424;
+}
+.menu .title {
+    font-family: 'Source Sans Pro';
+    font-size: 24px;
 }
 .column {
     float: left;

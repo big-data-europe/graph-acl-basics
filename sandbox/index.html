@@ -16,7 +16,7 @@
       <div class="panel constraint" >
 	<h2>Constraints
      
-<span class="help" title="Use <SESSION> for the mu-session-id header.&#013;&#013;Graphs containing the matched triple  _?a ?b ?c_  should be variables.&#013;Use VALUES or BIND when necessary.&#013;&#013;Cache annotations can take the form  _@access Label_  or  _@access Label(?var)_ ,&#013;and are parsed as Quad blocks (GraphPatternNotTriples).">?</span>
+<span class="help" title="Use <SESSION> for the mu-session-id header.&#013;&#013;Graphs containing the matched triple `?a ?b ?c` should be variables.&#013;Use VALUES or BIND when necessary.&#013;&#013;Cache annotations can take the form `@access Label` or `@access Label(?var)` ,&#013;and are parsed as Quad blocks (GraphPatternNotTriples).">?</span>
         </h2>
         <p> <select id="plugins"><option></option></select>  <button id="clear-plugin">Clear</button> <button id="save-plugin">Save</button> <button id="save-plugin-as" disabled=true>Save As</button>  </p>
         <h3>Read Constraint</h3>
@@ -109,10 +109,13 @@ WHERE {
         <div class="column right">
           <div class="panel">
             <h2>Model</h2>
-            <h3>Apply Constraints</h3>
+            <h3>Apply Model</h3>
             <p>Load current read and write constraints and clear the triplestore.</p>
             <p><button name="model" id="apply">Apply</button> <span id="apply-message"></span> </p>        
-            <h3>Generate Model</h3>
+            <h3>Clear Data</h3>
+            <p>Clear data based on currently applied model.</p>
+            <p><button name="model" id="clear">Clear</button> <span id="clear-message"></span> </p>        
+            <h3>Generate Data</h3>
             <p>Generate random data according to school model (below), logged-in as "principle".<br/>
               Generated users will have the following pre-defined roles and URIs:</p>
             <ul>
@@ -121,7 +124,8 @@ WHERE {
               <li>"student": <code>&lt;http://mu.semte.ch/users/student1&gt;</code> ...</li>
             </ul>
             <p></p>
-            <p><button name="model" id="generate">Generate</button> <span id="generate-message"></span> <a id="preview" href="/preview">Sample Application &raquo;</a></p>        
+            <p><button name="model" id="generate">Generate</button> <span id="generate-message"></span></p>
+            <p><a  href="http://localhost:9001/">Sample Application &raquo;</a></p>        
 
           </div> <!-- .panel -->
           <div class="panel">

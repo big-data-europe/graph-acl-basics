@@ -63,13 +63,13 @@
                 (:email :string ,(s-prefix "foaf:mbox"))
                 (:role :string ,(s-prefix "school:role")))
   :has-many `((class :via ,(s-prefix "school:hasTeacher")
-                             :as "classesTaught"
+                             :as "classes-taught"
                              :inverse t)
               (class :via ,(s-prefix "school:hasStudent")
-                            :as "classesTaken"
+                            :as "classes-taken"
                             :inverse t)
-              (grade :via ,(s-prefix "gradeRecipient")
-                      :as "earnedGrades"
+              (grade :via ,(s-prefix "school:gradeRecipient")
+                      :as "earned-grades"
                       :inverse t))
   :resource-base (s-url "http://mu.semte.ch/school/people/")
   :on-path "people")

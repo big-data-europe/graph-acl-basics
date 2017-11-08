@@ -26,6 +26,22 @@ defmodule Dispatcher do
     Proxy.forward conn, path, "http://resource/"
   end
 
+  match "/grades/*path" do
+    Proxy.forward conn, path, "http://resource/grades/"
+  end
+
+  match "/people/*path" do
+    Proxy.forward conn, path, "http://resource/people/"
+  end
+
+  match "/classes/*path" do
+    Proxy.forward conn, path, "http://resource/classes/"
+  end
+
+  match "/subjects/*path" do
+    Proxy.forward conn, path, "http://resource/subjects/"
+  end
+
   match "/as/*path" do
     Proxy.forward conn, path, "http://as:8890/"
   end
@@ -34,8 +50,8 @@ defmodule Dispatcher do
     Proxy.forward conn, path, "http://generator/"
   end
 
-  match "/preview/*path" do
-    Proxy.forward conn, path, "http://preview/"
+  match "/app/*path" do
+    Proxy.forward conn, path, "http://app/"
   end
 
   match _ do
