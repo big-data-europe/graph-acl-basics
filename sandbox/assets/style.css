@@ -101,14 +101,14 @@ h1 {
     margin: 18px 0 0 0;
 }
 h2 {
-    font-size: 1.3em;
+    font-size: 1.2em;
     font-weight: bold;
     font-family: arial;
     color: #424;
     margin-top: 1.4em;
 }
 h3 {
-    font-size: 1.3em;
+    font-size: 1.2em;
     font-weight: normal;
     color: #424;
 }
@@ -221,4 +221,7 @@ textarea {
     border-radius: 9px;
     width: 9px;
     padding: 0 2px;
+}
+button {
+    font-size: small
 }
