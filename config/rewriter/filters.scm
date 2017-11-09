@@ -1,6 +1,6 @@
 (*functional-properties* '(rdf:type))
 
-(*unique-variables* '(?session ?user))
+(*unique-variables* '())
 
 (define-constraint  
   'read/write 
@@ -19,23 +19,36 @@ WHERE {
   <SESSION> mu:account ?user.
  }
  {
-  @access Type(?type)
-  FILTER (?type != school:Grade)
-  GRAPH graphs:people {
-    ?user school:role ?role
-   }
-   GRAPH ?graph {
-   ?a ?b ?c.
-   ?a rdf:type ?type.
-  }
- }
- UNION {
-  @access Grade
-  FILTER (?type = school:Grade)
   GRAPH ?graph {
    ?a ?b ?c.
-   ?a rdf:type ?type.
+   ?a rdf:type foaf:Person.
   }
+  FILTER( ?b IN (rdf:type, foaf:name, foaf:mbox, school:role, mu:uuid ))
+  VALUES ?graph { graphs:people }
+ }
+ UNION {
+  GRAPH ?graph {
+   ?a ?b ?c.
+   ?a rdf:type school:Class.
+  }
+  FILTER( ?b IN (rdf:type, dct:title, dct:subject, school:teacher, school:student, school:classGrade, mu:uuid))
+  VALUES ?graph { graphs:classes }
+ }
+ UNION {
+  GRAPH ?graph {
+   ?a ?b ?c.
+   ?a rdf:type school:Subject.
+  }
+  FILTER( ?b IN (rdf:type, dct:title, mu:uuid))
+  VALUES ?graph { graphs:subjects }
+ }
+ UNION {
+  GRAPH ?graph {
+   ?a ?b ?c.
+   ?a rdf:type school:Grade.
+  }
+  FILTER( ?b IN (rdf:type, school:gradePoints, school:gradeRecipient, mu:uuid))
+  VALUES ?graph { graphs:grades }
   {
    GRAPH graphs:people {
     ?user school:role \"principle\".
@@ -58,12 +71,6 @@ WHERE {
     ?a school:gradeRecipient ?user.
    }
   }
- }
- VALUES (?graph ?type) { 
-  (graphs:grades school:Grade) 
-  (graphs:subjects school:Subject) 
-  (graphs:classes school:Class) 
-  (graphs:people foaf:Person) 
  }
 }  "))
 
