@@ -17,6 +17,7 @@ var readConstraint = document.getElementById('read-constraint');
 var writeConstraint = document.getElementById('write-constraint');
 var readwrite = document.getElementById('read-write');
 var fprops = document.getElementById('fprops');
+var queryFprops = document.getElementById('query-fprops');
 var uvs = document.getElementById('uvs');
 var resultPanelBox = document.querySelector('.panel-box');
 var resultPanel = document.getElementById('result-panel');
@@ -144,6 +145,7 @@ button.onclick = function(){
                      + "&readconstraint=" + escape(readConstraint.value)
                      + "&writeconstraint=" + escape((readwrite.checked ? readConstraint.value : writeConstraint.value))
                      + "&fprops=" + escape(fprops.value)
+                     + "&query-fprops=" + escape(queryFprops.checked)
                      + "&uvs=" + escape(uvs.value)
                      //+ "&session-id=" + escape(sessionID.value)
                     );
@@ -189,6 +191,7 @@ applyButton.onclick = function(){
     request.send("&readconstraint=" + escape(readConstraint.value)
                  + "&writeconstraint=" + escape((readwrite.checked ? readConstraint.value : writeConstraint.value))
                  + "&fprops=" + escape(fprops.value)
+                 + "&queryfprops=" + escape(queryFprops.checked)
                  + "&uvs=" + escape(uvs.value)
                  //+ "&session-id=" + sessionID.value
                 );
@@ -213,7 +216,7 @@ generateButton.onclick = function(){
                  var request = Req("POST", "/generator/generate",
                                    function(jr){
                                        generateMessage.style.display = "inline";
-                                       generateMessage.innerHTML = 'Model generated.';
+                                       generateMessage.innerHTML = 'Generating model.';
                                    },
                                    function(){
                                        generateMessage.innerHTML = 'Error generating model.';
@@ -221,6 +224,7 @@ generateButton.onclick = function(){
                  request.send("&readconstraint=" + escape(readConstraint.value)
                               + "&writeconstraint=" + escape((readwrite.checked ? readConstraint.value : writeConstraint.value))
                               + "&fprops=" + fprops.value
+                              + "&queryfprops=" + escape(queryFprops.checked)
                               + "&uvs=" + escape(uvs.value)
                              );
              });
@@ -385,6 +389,7 @@ var save = function(){
         saveReq.send("readconstraint=" + escape(readConstraint.value)
                      + (readwrite.checked ? "&readwrite=t" : ("&writeconstraint=" + writeConstraint.value))
                      + "&fprops=" + escape(fprops.value)
+                     + "&queryfprops=" + escape(queryFprops.checked)
                      + "&uvs=" + escape(uvs.value));
 };
 

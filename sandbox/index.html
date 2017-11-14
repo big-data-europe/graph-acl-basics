@@ -36,6 +36,7 @@
 	
         <h4>Functional properties <span class="help" title="Comma- or space-separated list.">?</span></h4>
         <p> <input type="text" id="fprops" value="rdf:type"/></p>
+        <p><input type="checkbox" id="query-fprops" checked=true/> Query functional properties for known subjects</p>
       </div>
     </div>
     <div class="column middle">
@@ -78,7 +79,7 @@
           <!-- <small>>mu-session-id: </code> <select id="session-id"><option>&lt;session/0&gt;</option><option>&lt;session/1&gt;</option><option>&lt;session/2&gt;</option></select> <button name="rewrite" id="rewrite">Rewrite</button></small> -->
 
         <textarea id="query">
-SELECT ?s ?name
+SELECT *
 WHERE {
   ?s a foaf:Person;
      foaf:name ?name
