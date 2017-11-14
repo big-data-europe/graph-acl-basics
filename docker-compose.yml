@@ -40,11 +40,12 @@ services:
       MESSAGE_LOGGING: "true"
       PRINT_SPARQL_QUERIES: "true"
       USE_TEMP: "false"
-      CALCULATE_ANNOTATIONS: "false"
+      CALCULATE_ANNOTATIONS: "true"
       REWRITE_SELECT_QUERIES: "true"
     volumes:
       - ./config/rewriter:/config
       - ~/code/mu-graph-rewriter/sandbox:/app/sandbox
+      - ./logs:/logs
     ports:
       - "4005:4005"
       - "4027:8890"
@@ -66,8 +67,7 @@ services:
     volumes:
       - ./data/db:/data
   resource:
-    image: semtech/mu-cl-resources:1.15.0
-    # build: ./mu-cl-resources
+    image: semtech/mu-cl-resources
     links:
       - as:database
     volumes:
