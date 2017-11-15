@@ -294,50 +294,57 @@ pluginsReq.send();
 
 // load plugin
 plugins.onchange = function(e){ 
-    var pluginReq = Req("GET", "/as/plugin/" + e.target.value,
-                               function(jr){
-                                   var r = jr.readConstraint.trim();
-                                   var w = jr.writeConstraint.trim();
+    if(e.target.value == ''){
+        clear();
+    }
+    else{
+        var pluginReq = Req("GET", "/as/plugin/" + e.target.value,
+                            function(jr){
+                                var r = jr.readConstraint.trim();
+                                var w = jr.writeConstraint.trim();
 
-                                   readConstraint.value = r;
-                                   resize(readConstraint)();
+                                readConstraint.value = r;
+                                resize(readConstraint)();
 
-                                   if(r == w){
-                                       readwrite.checked = true;
-                                       writeConstraint.value = '';
-                                       writeConstraint.disabled = true;
-                                       writeConstraint.style.background = '#ddd';
-                                   }
-                                   else {
-                                       readwrite.checked = false;
-                                       writeConstraint.value = w;
-                                       writeConstraint.disabled = false;
-                                       writeConstraint.style.background = '#fff';
-                                   }
+                                if(r == w){
+                                    readwrite.checked = true;
+                                    writeConstraint.value = '';
+                                    writeConstraint.disabled = true;
+                                    writeConstraint.style.background = '#ddd';
+                                }
+                                else {
+                                    readwrite.checked = false;
+                                    writeConstraint.value = w;
+                                    writeConstraint.disabled = false;
+                                    writeConstraint.style.background = '#fff';
+                                }
 
-                                   resize(writeConstraint)();
+                                resize(writeConstraint)();
 
-                                   fprops.value = '';
-                                   [].forEach.call(jr.functionalProperties, function(fp){
-                                       if(fprops.value != '') fprops.value += ', ';
-                                       fprops.value += fp
-                                   });
+                                fprops.value = '';
+                                [].forEach.call(jr.functionalProperties, function(fp){
+                                    if(fprops.value != '') fprops.value += ', ';
+                                    fprops.value += fp
+                                });
 
-                                   uvs.value = '';
-                                   [].forEach.call(jr.uniqueVariables, function(uv){
-                                       if(uvs.value != '') uvs.value += ', ';
-                                       uvs.value += uv
-                                   });
-                                   savePluginAs.disabled = false;
-                               },
-                               function(e){
-                                   alert('Error');
-                               });
-    pluginReq.send();
+                                uvs.value = '';
+                                [].forEach.call(jr.uniqueVariables, function(uv){
+                                    if(uvs.value != '') uvs.value += ', ';
+                                    uvs.value += uv
+                                });
+                                savePluginAs.disabled = false;
+                            },
+                            function(e){
+                                alert('Error');
+                            });
+        pluginReq.send();
+    }
 };
 
 var clear = function(){
     plugins.value = '';
+    message.innerHTML = '';
+    savePluginAs.disabled = true;
     readConstraint.value = 
         "PREFIX graphs: <http://mu.semte.ch/school/graphs/>\n"
         + "PREFIX school: <http://mu.semte.ch/vocabularies/school/>\n"
@@ -392,9 +399,10 @@ var save = function(){
                                      plugins.value = name;
                                      savePluginAs.disabled = false;
                                  }
+                                 message.innerHTML = "Constraint saved.";
                              },
                              function(e){
-                                 alert('Error');
+                                     message.innerHTML = "Error saving constraint.";
                              });
         saveReq.send("readconstraint=" + escape(readConstraint.value)
                      + (readwrite.checked ? "&readwrite=t" : ("&writeconstraint=" + writeConstraint.value))
