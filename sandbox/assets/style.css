@@ -36,34 +36,69 @@ a {
     font-weight: bold;
     color: white;
     background: #424;
+    z-index: 1;
 }
 .menu .title {
     font-family: 'Source Sans Pro';
     font-size: 24px;
 }
+.menu .user {
+    float: right;
+    font-size: .8em;
+    font-weight: normal;
+}
+.toolbar {
+    margin: 0;
+    padding: 4px 1.7%;
+    background: #4246;
+    z-index: 1;
+    color: white;
+}
+.toolbar a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+}
+.toolbar button, .toolbar select {
+    margin-right: .4em;
+}
+.toolbar #message {
+
+}
+.toolbar .right {
+    float: right;
+    margin-top: 8px;
+}
 .column {
     float: left;
 }
 .row.main {
-    margin-top: -2em;
-    padding-top: 2em;
 }
 .column.left {
-    width: 30%;
+    width: 33%;
     background: #eee;
-    height: 100%;
 }
 .column.middle {
     width: 33%;
-    display: table-cell;
-    background: #fff;
     padding-bottom: 2em;
-    box-shadow: 5px 5px 5px #ddd;
     margin-bottom: 2em;
 }
 .column.right {
-    width: 35%;
-    display: table-cell;
+    width: 33%;
+}
+.column.side {
+    width: 10%;
+    display: none;
+    background: #ddd;
+    box-shadow: -5px 0px 5px #aaa;
+    height: 100%;
+    overflow-y: scroll;
+    /* z-index: 0; */
+    /* margin-top: -9em; */
+
+}
+.column.side > .panel:first-child {
+    /* margin-top: 12em; */
 }
 
 .column.middle  {
@@ -77,7 +112,7 @@ a {
 }
 .panel {
     padding: 0 6%;
-    float: left;
+    /* float: left; */
 }
 /* .middle .generate .column { */
 /*     width: 100%; */
@@ -91,9 +126,8 @@ a {
 .middle .row {
     /*    padding-left: 2%*/
 }
-.middle .results {
+.results {
     display: none;
-    width: 95.3%;
     font-size: small;
 }
 h1 {
@@ -112,7 +146,7 @@ h3 {
     font-weight: normal;
     color: #424;
 }
-h3 small {
+h2 small {
     font-weight: normal;
     font-size: .7em;
     float: right;
@@ -146,6 +180,7 @@ textarea {
     color: #888;
     border: none;
     background: #eee;
+    background: #fff;
 }
 .panel textarea.auth {
     height: 180px;
@@ -164,7 +199,7 @@ textarea {
 }
 .panel-box.filled {
     /* background: #844439; */
-    background: #ded;
+    background: #fff;
 }
 .panel pre  {
     padding: 12px;
@@ -172,12 +207,10 @@ textarea {
     border: none;
     background: none;
 }
-.panel #results {
-    height: 660px;
+#results {
     margin: 0;
     padding: 12px;
     border: none;
-    background: white;
 }
 .panel #result.error {
     background: pink 
@@ -224,4 +257,8 @@ textarea {
 }
 button {
     font-size: small
+}
+a.close {
+    text-decoration: none;
+    color: #424;
 }

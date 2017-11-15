@@ -4,14 +4,12 @@ var plugins = document.getElementById('plugins');
 var savePlugin = document.getElementById('save-plugin');
 var savePluginAs = document.getElementById('save-plugin-as');
 var clearPlugin = document.getElementById('clear-plugin');
-var button = document.getElementById('rewrite');
+var rewriteButton = document.getElementById('rewrite');
 var runButton = document.getElementById('run');
 var applyButton = document.getElementById('apply');
-var applyMessage = document.getElementById('apply-message');
+var message = document.getElementById('message');
 var clearButton = document.getElementById('clear');
-var clearMessage = document.getElementById('clear-message');
 var generateButton = document.getElementById('generate');
-var generateMessage = document.getElementById('generate-message');
 var query = document.getElementById('query');
 var readConstraint = document.getElementById('read-constraint');
 var writeConstraint = document.getElementById('write-constraint');
@@ -28,9 +26,7 @@ var rwquery = false;
 var annotationsBox = document.getElementById('annotations-box');
 var annotations = document.getElementById('annotations');
 var queriedAnnotations = document.getElementById('queried-annotations');
-// var authorizationInsert = document.getElementById('authorization-insert');
 var authorizationUser = document.getElementById('authorization-user');
-// var sessionID = document.getElementById('session-id');
 var domainButton = document.getElementById('toggle-domain');
 var domain = document.getElementById('domain');
 
@@ -81,7 +77,7 @@ domainButton.onclick = function() {
 }
 
 // rewrite query
-button.onclick = function(){
+rewriteButton.onclick = function(){
     withAuth(authorizationUser.value,
              function(){
                  var request = Req("POST","/as/sandbox",
@@ -120,7 +116,7 @@ button.onclick = function(){
                                       queriedAnnotations.appendChild(an);
                                   }
                                   annotationsBox.style.display = 'block';
-                                  location.hash = '#result-panel';
+                                  // location.hash = '#result-panel';
 
                               }
 
@@ -164,10 +160,12 @@ runButton.onclick = function(){
                      var request = Req("POST", "/as/proxy",
                                        function(jr){
 		                           results.className = 'filled';
-		                           results.value = JSON.stringify(jr.results.bindings, null, 2);
+		                           results.innerHTML = JSON.stringify(jr.results.bindings, null, 2);
                                            resultsPanel.style.display = "block";
-                                           location.hash = '#results-panel';
-                                           resize(results)();
+                                           // location.hash = '#results-panel';
+                                           showColumn('#results-column');
+                                           // resize(results)();
+                                           scrunchColumns();
                                        },
                                        function(){
                                            results.value = 'Error';
@@ -181,11 +179,11 @@ runButton.onclick = function(){
 applyButton.onclick = function(){
     var request = Req("POST", "/as/apply",
                       function(jr){
-                          applyMessage.style.display = "inline";
-                          applyMessage.innerHTML = 'Constraints applied.';
+                          message.style.display = "inline";
+                          message.innerHTML = 'Constraints applied.';
                       },
                       function(){
-                          applyMessage.innerHTML = 'Error applying constraints.';
+                          message.innerHTML = 'Error applying constraints.';
                       });
 
     request.send("&readconstraint=" + escape(readConstraint.value)
@@ -197,29 +195,31 @@ applyButton.onclick = function(){
                 );
 };
 
+// clear data
 clearButton.onclick = function(){
     var request = Req("DELETE", "/as/clear",
                       function(jr){
-                          clearMessage.style.display = "inline";
-                          clearMessage.innerHTML = 'Data cleared.';
+                          message.style.display = "inline";
+                          message.innerHTML = 'Data cleared.';
                       },
                       function(){
-                          clearMessage.innerHTML = 'Error clearing data.';
+                          message.innerHTML = 'Error clearing data.';
                       });
 
     request.send();
 };
 
+// generate data
 generateButton.onclick = function(){
     withAuth("http://mu.semte.ch/users/principle",
              function(){
                  var request = Req("POST", "/generator/generate",
                                    function(jr){
-                                       generateMessage.style.display = "inline";
-                                       generateMessage.innerHTML = 'Generating model.';
+                                       message.style.display = "inline";
+                                       message.innerHTML = 'Generating model.';
                                    },
                                    function(){
-                                       generateMessage.innerHTML = 'Error generating model.';
+                                       message.innerHTML = 'Error generating model.';
                                    });
                  request.send("&readconstraint=" + escape(readConstraint.value)
                               + "&writeconstraint=" + escape((readwrite.checked ? readConstraint.value : writeConstraint.value))
@@ -272,8 +272,12 @@ function init () {
         resizer();
     });
 
+[].forEach.call(document.querySelectorAll(".close"), function(button){
+    button.onclick = stretchColumns;
+});
 }
 
+// load plugins <select>
 var option;
 var pluginsReq = Req("GET", "/as/plugin",
                             function(jr){
@@ -288,6 +292,7 @@ var pluginsReq = Req("GET", "/as/plugin",
                             });
 pluginsReq.send();
 
+// load plugin
 plugins.onchange = function(e){ 
     var pluginReq = Req("GET", "/as/plugin/" + e.target.value,
                                function(jr){
@@ -300,10 +305,14 @@ plugins.onchange = function(e){
                                    if(r == w){
                                        readwrite.checked = true;
                                        writeConstraint.value = '';
+                                       writeConstraint.disabled = true;
+                                       writeConstraint.style.background = '#ddd';
                                    }
                                    else {
                                        readwrite.checked = false;
                                        writeConstraint.value = w;
+                                       writeConstraint.disabled = false;
+                                       writeConstraint.style.background = '#fff';
                                    }
 
                                    resize(writeConstraint)();
@@ -363,6 +372,7 @@ var clear = function(){
 
 clearPlugin.onclick = clear;
 
+// save plugin
 var save = function(){
     var name, newName;
     if(plugins.value == ''){
@@ -397,6 +407,24 @@ savePlugin.onclick = save;
 savePluginAs.onclick = function(){
     plugins.value = '';
     save();
+}
+
+var showColumn = function(id){
+    document.querySelector(id).style.display = "block";
+}
+var scrunchColumns = function(){
+    [].forEach.call(document.querySelectorAll('.column'), function(column){
+        column.style.width = "25%";
+    });
+}
+
+var stretchColumns = function(){
+    [].forEach.call(document.querySelectorAll('.column'), function(column){
+        column.style.width = "33%";
+    });
+    [].forEach.call(document.querySelectorAll('.column.side'), function(column){
+        column.style.display = "none";
+    });
 }
 
 init();

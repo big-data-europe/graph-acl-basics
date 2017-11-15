@@ -7,19 +7,39 @@
   </head>
   <body>
     <div class="menu">
-      <div class="title">Constraint Rewriter Sandbox</div>
+      <div class="title">Constraint Rewriter Sandbox
+        <div class="user">
+          <select id="authorization-user">
+            <option>http://mu.semte.ch/users/principle</option>
+            <option>http://mu.semte.ch/users/teacher1</option>
+            <option>http://mu.semte.ch/users/student1</option>
+          </select>      
+        </div>
+      </div>
+    </div>
+
+    <div class="toolbar">
+        <p>
+          <select id="plugins"><option value="">Saved Constraints</option><option value="">===============</option></select>  <button id="clear-plugin">Clear</button> <button id="save-plugin">Save</button> <button id="save-plugin-as" disabled=true>Save As</button>  
+
+          <button name="model" id="apply">Apply Constraint</button> 
+          <button name="model" id="clear">Clear Data</button>
+          <button name="model" id="generate">Generate Data</button> 
+          <span id="message"></span>
+          <span class="right">
+            <a target="_new"  href="http://localhost:9001/">Sample Application &raquo;</a>
+          </span>
+        </p>
     </div>
 
     <div class="row main">
     <div class="column left">
 
       <div class="panel constraint" >
-	<h2>Constraints
+	<h2>Constraint
      
 <span class="help" title="Use <SESSION> for the mu-session-id header.&#013;&#013;Graphs containing the matched triple `?a ?b ?c` should be variables.&#013;Use VALUES or BIND when necessary.&#013;&#013;Cache annotations can take the form `@access Label` or `@access Label(?var)` ,&#013;and are parsed as Quad blocks (GraphPatternNotTriples).">?</span>
         </h2>
-        <p> <select id="plugins"><option></option></select>  <button id="clear-plugin">Clear</button> <button id="save-plugin">Save</button> <button id="save-plugin-as" disabled=true>Save As</button>  </p>
-        <h3>Read Constraint</h3>
 	<textarea class="constraint text" id="read-constraint"></textarea> 
 
 </div>
@@ -40,100 +60,45 @@
       </div>
     </div>
     <div class="column middle">
-      <div class="panel">
-        <h2>Queries</h2>
-      </div>
-<!--       <div class="panel auth"> -->
-<!--         <h3>Authorization and Login</h3> -->
-<!--         <p> </p> -->
-<!--         <pre> -->
-<!-- INSERT DATA { -->
-<!--   GRAPH &lt;http://mu.semte.ch/authorization&gt; { -->
-<!-- </pre> -->
-<!--         <textarea class="auth text" id="authorization-insert"> -->
-<!-- <session/0> mu:account <http://mu.semte.ch/users/principle>. -->
-
-<!-- <session/1> mu:account <http://mu.semte.ch/users/teacher1>. -->
-
-<!-- <session/2> mu:account <http://mu.semte.ch/users/student1>. -->
-<!--         </textarea> -->
-<!--         <pre> -->
-<!--   } -->
-<!-- }</pre> -->
-<!--       </div> <\!-- .panel -\-> -->
-
       <div class="panel query">
-        <h3>Authorization</h3>
-          <p>
-            Run queries as user:
-            <select id="authorization-user">
-              <option>http://mu.semte.ch/users/principle</option>
-              <option>http://mu.semte.ch/users/teacher1</option>
-              <option>http://mu.semte.ch/users/student1</option>
-            </select>      
-          </p>
-      </div>
-
-      <div class="panel query">
-        <h3>Query <small><button name="rewrite" id="rewrite">Rewrite</button></small></h3>
-          <!-- <small>>mu-session-id: </code> <select id="session-id"><option>&lt;session/0&gt;</option><option>&lt;session/1&gt;</option><option>&lt;session/2&gt;</option></select> <button name="rewrite" id="rewrite">Rewrite</button></small> -->
-
+        <h2>Query <small><button name="rewrite" id="rewrite">Rewrite</button></small></h2>
         <textarea id="query">
 SELECT *
 WHERE {
   ?s a foaf:Person;
      foaf:name ?name
 }
-        </textarea>
+        </textarea>        
       </div> <!-- .panel -->
-      <div class="panel" id="result-panel">
-        <h3>Rewritten Query <small><button name="run" id="run" disabled=true>Run</button></small></h3>
-        <div class="panel-box">
-          <pre id="result"></pre>
-        </div><!-- .panel-box -->
-      </div><!-- .panel.result -->
-
-      <div class="panel">
-          <div id="annotations-box">
-            <h3>Query Annotations</h3>
-            <ul id="annotations"></ul>
-            <h3>Queried Annotations</h3>
-            <ul id="queried-annotations"></ul>
-          </div>
-    </div> <!-- .panel -->
-      <div class="panel results" id="results-panel">
-        <h3>Query Results</h3>
-        <textarea id="results" disabled=true></textarea>
-      </div> <!-- .panel.results -->
     </div>  <!-- .column.middle -->
 
         <div class="column right">
-          <div class="panel">
-            <h2>Model</h2>
-            <h3>Apply Model</h3>
-            <p>Load current read and write constraints.</p>
-            <p><button name="model" id="apply">Apply</button> <span id="apply-message"></span> </p>        
-            <h3>Clear Data</h3>
-            <p>Clear data in the triplestore, based on currently applied model.</p>
-            <p><button name="model" id="clear">Clear</button> <span id="clear-message"></span> </p>        
-            <h3>Generate Data</h3>
-            <p>Generate random data according to school model (below), logged-in as "principle".<br/>
-              Generated users will have the following pre-defined roles and URIs:</p>
-            <ul>
-              <li>"principle": <code>&lt;http://mu.semte.ch/users/principle&gt;</code></li>
-              <li>"teacher": <code>&lt;http://mu.semte.ch/users/teacher1&gt;</code> ...</li>
-              <li>"student": <code>&lt;http://mu.semte.ch/users/student1&gt;</code> ...</li>
-            </ul>
-            <p></p>
-            <p><button name="model" id="generate">Generate</button> <span id="generate-message"></span></p>
+          <div class="panel" id="result-panel">
+            <h2>Rewritten Query <small><button name="run" id="run" disabled=true>Run</button></small></h2>
+            <div class="panel-box">
+              <pre id="result"></pre>
+            </div><!-- .panel-box -->
+          </div><!-- .panel.result -->
 
-          </div> <!-- .panel -->
           <div class="panel">
-            <h3><a  href="http://localhost:9001/">Sample Application &raquo;</a></h3>
+            <div id="annotations-box">
+              <h3>Query Annotations</h3>
+              <ul id="annotations"></ul>
+              <h3>Queried Annotations</h3>
+              <ul id="queried-annotations"></ul>
+            </div>
+          </div> <!-- .panel -->
+        </div>
+        <div class="column side" id="results-column">
+          <div class="panel results" id="results-panel">
+            <h2><a href="#" class="close">Query Results &#x2715;</a></h2>
+            <pre id="results"></pre>
+          </div> <!-- .panel.results -->
+        </div>   <!-- .column -->
 
-          </div> <!-- .panel -->
+        <div class="column side" id="help">
           <div class="panel">
-            <h3><a id="toggle-domain">domain.lisp</a></h3>
+            <a id="toggle-domain">domain.lisp</a>
             <pre id="domain"><code class="lisp">
 (define-resource person ()
   :class (s-prefix "foaf:Person")
@@ -165,9 +130,9 @@ WHERE {
   :class (s-prefix "school:Class")
   :properties `((:name :string ,(s-prefix "dct:title"))
                 (:subject :string ,(s-prefix "dct:subject")))
-  :has-many `((person :via ,(s-prefix "school:teacher")
+  :has-many `((person :via ,(s-prefix "school:hasTeacher")
                       :as  "teachers")
-              (person :via ,(s-prefix "school:student")
+              (person :via ,(s-prefix "school:hasStudent")
                       :as  "students")
               (grade :via ,(s-prefix "school:classGrade")
                      :as  "grades"))
