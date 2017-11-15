@@ -33,72 +33,36 @@
     </div>
 
     <div class="row main">
-    <div class="column left">
-
-      <div class="panel constraint" >
-	<h2>Constraint
-     
-<span class="help" title="Use <SESSION> for the mu-session-id header.&#013;&#013;Graphs containing the matched triple `?a ?b ?c` should be variables.&#013;Use VALUES or BIND when necessary.&#013;&#013;Cache annotations can take the form `@access Label` or `@access Label(?var)` ,&#013;and are parsed as Quad blocks (GraphPatternNotTriples).">?</span>
-        </h2>
-	<textarea class="constraint text" id="read-constraint"></textarea> 
-
-</div>
-      <div class="panel constraint">
-	<h3>Write Constraint <small><input checked=true type="checkbox" id="read-write"/>Same as Read Constraint</small></h3>
-	<textarea class="constraint text" id="write-constraint" disabled=true>
-        </textarea>
-      </div>
-      <div class="panel">
-	<h3>Optimizations</h3>
-	<h4>Unique Variables <span class="help" title="These variables will not be rewritten.&#013;&#013;Comma- or space-separated list.">?</span></h4>
-        
-        <p> <input type="text" id="uvs" value="?session, ?user"/></p>
-	
-        <h4>Functional properties <span class="help" title="Comma- or space-separated list.">?</span></h4>
-        <p> <input type="text" id="fprops" value="rdf:type"/></p>
-        <p><input type="checkbox" id="query-fprops" checked=true/> Query functional properties for known subjects</p>
-      </div>
-    </div>
-    <div class="column middle">
-      <div class="panel query">
-        <h2>Query <small><button name="rewrite" id="rewrite">Rewrite</button></small></h2>
-        <textarea id="query">
-SELECT *
-WHERE {
-  ?s a foaf:Person;
-     foaf:name ?name
-}
-        </textarea>        
-      </div> <!-- .panel -->
-    </div>  <!-- .column.middle -->
-
-        <div class="column right">
-          <div class="panel" id="result-panel">
-            <h2>Rewritten Query <small><button name="run" id="run" disabled=true>Run</button></small></h2>
-            <div class="panel-box">
-              <pre id="result"></pre>
-            </div><!-- .panel-box -->
-          </div><!-- .panel.result -->
-
-          <div class="panel">
-            <div id="annotations-box">
-              <h3>Query Annotations</h3>
-              <ul id="annotations"></ul>
-              <h3>Queried Annotations</h3>
-              <ul id="queried-annotations"></ul>
-            </div>
-          </div> <!-- .panel -->
-        </div>
-        <div class="column side" id="results-column">
-          <div class="panel results" id="results-panel">
-            <h2><a href="#" class="close">Query Results &#x2715;</a></h2>
-            <pre id="results"></pre>
-          </div> <!-- .panel.results -->
-        </div>   <!-- .column -->
-
         <div class="column side" id="help">
           <div class="panel">
-            <a id="toggle-domain">domain.lisp</a>
+            <h2><a href="#" class="close">Help &#x2715;</a></h2>
+            <h3>Constraints</h3>
+            <p>Use <code>&lt;SESSION&gt;</code> for the mu-session-id header.</p>
+            <p>In the write constraint, graphs containing the matched triple should be variables. Use VALUES when necessary:</p>
+            <pre>
+GRAPH ?graph {
+  ?a ?b ?c
+}
+VALUES ?graph { &lt;http://example.com/people&gt; }</pre>
+            <p>Cache annotations can take two forms:</p>
+            
+            <pre><code>@access Label</code></pre>
+            <pre><code>@access Label(?var)</code></pre>
+            <p>and are parsed as Quad blocks (GraphPatternNotTriples).</p>
+            </div>
+
+          <div class="panel">
+            <h3>Unique Variables</h3>
+            <p>Unique variables will not be rewritten. Comma- or space-separated list.">?</p>
+            </div>
+
+          <div class="panel">
+            <h3>Functional Properties</h3>
+            <p>Comma- or space-separated list.</p>
+            </div>
+
+          <div class="panel">
+            <h3><a id="toggle-domain">Model (domain.lisp)</a></h3>
             <pre id="domain"><code class="lisp">
 (define-resource person ()
   :class (s-prefix "foaf:Person")
@@ -154,6 +118,67 @@ WHERE {
           <br style="clear"/>  
         </div>
     </div>
+    <div class="column left">
+
+      <div class="panel constraint" >
+	<h2>Constraint
+          <a target="#" class="help">?</a>
+        </h2>
+	<textarea class="constraint text" id="read-constraint"></textarea> 
+
+</div>
+      <div class="panel constraint">
+	<h3>Write Constraint <small><input checked=true type="checkbox" id="read-write"/>Same as Read Constraint</small></h3>
+	<textarea class="constraint text" id="write-constraint" disabled=true>
+        </textarea>
+      </div>
+      <div class="panel">
+	<h3>Optimizations</h3>
+	<h4>Unique Variables</h4>
+        
+        <p> <input type="text" id="uvs" value="?session, ?user"/></p>
+	
+        <h4>Functional properties</h4>
+        <p> <input type="text" id="fprops" value="rdf:type"/></p>
+        <p><input type="checkbox" id="query-fprops" checked=true/> Query functional properties for known subjects</p>
+      </div>
+    </div>
+    <div class="column middle">
+      <div class="panel query">
+        <h2>Query <small><button name="rewrite" id="rewrite">Rewrite</button></small></h2>
+        <textarea id="query">
+SELECT *
+WHERE {
+  ?s a foaf:Person;
+     foaf:name ?name
+}
+        </textarea>        
+      </div> <!-- .panel -->
+    </div>  <!-- .column.middle -->
+
+        <div class="column right">
+          <div class="panel" id="result-panel">
+            <h2>Rewritten Query <small><button name="run" id="run" disabled=true>Run</button></small></h2>
+            <div class="panel-box">
+              <pre id="result"></pre>
+            </div><!-- .panel-box -->
+          </div><!-- .panel.result -->
+
+          <div class="panel">
+            <div id="annotations-box">
+              <h3>Query Annotations</h3>
+              <ul id="annotations"></ul>
+              <h3>Queried Annotations</h3>
+              <ul id="queried-annotations"></ul>
+            </div>
+          </div> <!-- .panel -->
+        </div>
+        <div class="column side" id="results-column">
+          <div class="panel results" id="results-panel">
+            <h2><a href="#" class="close">Query Results &#x2715;</a></h2>
+            <pre id="results"></pre>
+          </div> <!-- .panel.results -->
+        </div>   <!-- .column -->
     <script type="text/javascript" src="/assets/sandbox.js"></script>
     <script type="text/javascript">
       HighlightLisp.highlight_auto({className: 'lisp'});

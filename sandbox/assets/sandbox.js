@@ -165,7 +165,6 @@ runButton.onclick = function(){
                                            // location.hash = '#results-panel';
                                            showColumn('#results-column');
                                            // resize(results)();
-                                           scrunchColumns();
                                        },
                                        function(){
                                            results.value = 'Error';
@@ -274,6 +273,10 @@ function init () {
 
 [].forEach.call(document.querySelectorAll(".close"), function(button){
     button.onclick = stretchColumns;
+});
+
+[].forEach.call(document.querySelectorAll(".help"), function(button){
+    button.onclick = function(){ showColumn("#help") }
 });
 }
 
@@ -418,11 +421,15 @@ savePluginAs.onclick = function(){
 }
 
 var showColumn = function(id){
-    document.querySelector(id).style.display = "block";
+    stretchColumns();
+    scrunchColumns();
+    var column = document.querySelector(id);
+    column.style.display = "block";
+    column.style.width = "40%";
 }
 var scrunchColumns = function(){
     [].forEach.call(document.querySelectorAll('.column'), function(column){
-        column.style.width = "25%";
+        column.style.width = "20%";
     });
 }
 

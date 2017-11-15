@@ -87,15 +87,19 @@ a {
     width: 33%;
 }
 .column.side {
-    width: 10%;
+    width: 40%;
     display: none;
     background: #ddd;
-    box-shadow: -5px 0px 5px #aaa;
-    height: 100%;
-    overflow-y: scroll;
+    /* height: 100%; */
+    /* overflow-y: scroll; */
     /* z-index: 0; */
     /* margin-top: -9em; */
-
+}
+.column.side:last-child {
+    box-shadow: -5px 0px 5px #aaa;
+}
+.column.side:first-child {
+    box-shadow: 5px 0px 5px #aaa;
 }
 .column.side > .panel:first-child {
     /* margin-top: 12em; */
@@ -246,7 +250,7 @@ textarea {
     display: none;
 }
 .help {
-    cursor: default;
+    cursor: pointer;
     background: #424;
     color: #fff;
     display: inline-block;
