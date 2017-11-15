@@ -191,7 +191,7 @@ applyButton.onclick = function(){
     request.send("&readconstraint=" + escape(readConstraint.value)
                  + "&writeconstraint=" + escape((readwrite.checked ? readConstraint.value : writeConstraint.value))
                  + "&fprops=" + escape(fprops.value)
-                 + "&queryfprops=" + escape(queryFprops.checked)
+                 + "&query-fprops=" + escape(queryFprops.checked)
                  + "&uvs=" + escape(uvs.value)
                  //+ "&session-id=" + sessionID.value
                 );
@@ -224,7 +224,7 @@ generateButton.onclick = function(){
                  request.send("&readconstraint=" + escape(readConstraint.value)
                               + "&writeconstraint=" + escape((readwrite.checked ? readConstraint.value : writeConstraint.value))
                               + "&fprops=" + fprops.value
-                              + "&queryfprops=" + escape(queryFprops.checked)
+                              + "&query-fprops=" + escape(queryFprops.checked)
                               + "&uvs=" + escape(uvs.value)
                              );
              });
@@ -389,7 +389,7 @@ var save = function(){
         saveReq.send("readconstraint=" + escape(readConstraint.value)
                      + (readwrite.checked ? "&readwrite=t" : ("&writeconstraint=" + writeConstraint.value))
                      + "&fprops=" + escape(fprops.value)
-                     + "&queryfprops=" + escape(queryFprops.checked)
+                     + "&query-fprops=" + escape(queryFprops.checked)
                      + "&uvs=" + escape(uvs.value));
 };
 
