@@ -335,6 +335,7 @@ plugins.onchange = function(e){
                                     if(uvs.value != '') uvs.value += ', ';
                                     uvs.value += uv
                                 });
+                                queryFprops.checked = jr.queryFunctionalProperties;
                                 savePluginAs.disabled = false;
                             },
                             function(e){
@@ -349,33 +350,22 @@ var clear = function(){
     message.innerHTML = '';
     savePluginAs.disabled = true;
     readConstraint.value = 
-        "PREFIX graphs: <http://mu.semte.ch/school/graphs/>\n"
-        + "PREFIX school: <http://mu.semte.ch/vocabularies/school/>\n"
-        + "PREFIX foaf: <http://xmlns.com/foaf/0.1/>\n"
-        + "\n"
-        + "CONSTRUCT {\n"
+        "CONSTRUCT {\n"
         + "  ?a ?b ?c\n"
         + "}\n"
         + "WHERE {\n"
-        + " @access Type(?type)\n"
-        + " GRAPH ?graph {\n"
-        + "   ?a ?b ?c;\n"
-        + "      a ?type\n"
+        + " GRAPH <http://mu.semte.ch/application> {\n"
+        + "   ?a ?b ?c\n"
         + " }\n"
-        + " VALUES (?graph ?type) {\n"
-        + "    (graphs:grades school:Grade)\n"
-        + "    (graphs:subjects school:Subject) \n"
-        + "    (graphs:classes school:Class) \n"
-        + "    (graphs:people foaf:Person) \n"
-        + "  }\n"
         + "}";
     resize(readConstraint)();
-    readwrite.checked = true;  
+    readwrite.checked = false;  
+    queryFprops.checked = false;
     writeConstraint.value = '';    
     writeConstraint.disabled = true;
     writeConstraint.style.background = '#ddd';
     resize(writeConstraint)();
-    fprops.value = 'rdf:type';
+    fprops.value = '';
     uvs.value = '';
     savePluginAs.disabled = true;
 }

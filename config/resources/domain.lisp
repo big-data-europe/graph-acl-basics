@@ -85,8 +85,9 @@
 
 (define-resource class ()
   :class (s-prefix "school:Class")
-  :properties `((:name :string ,(s-prefix "dct:title"))
-                (:subject :string ,(s-prefix "dct:subject")))
+  :properties `((:name :string ,(s-prefix "dct:title")))
+  :has-one `((subject :via ,(s-prefix "dct:subject")
+                      :as "subject"))
   :has-many `((person :via ,(s-prefix "school:hasTeacher")
                       :as  "teachers")
               (person :via ,(s-prefix "school:hasStudent")
