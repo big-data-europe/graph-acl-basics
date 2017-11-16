@@ -359,7 +359,7 @@ var clear = function(){
         + " }\n"
         + "}";
     resize(readConstraint)();
-    readwrite.checked = false;  
+    readwrite.checked = true;  
     queryFprops.checked = false;
     writeConstraint.value = '';    
     writeConstraint.disabled = true;
