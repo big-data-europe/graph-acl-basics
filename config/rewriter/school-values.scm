@@ -2,6 +2,8 @@
 
 (*unique-variables* '())
 
+(*query-functional-properties?* #t)
+
 (define-constraint  
   'read/write 
   (lambda ()    "
@@ -16,7 +18,7 @@ WHERE {
  @access Type(?type)
  GRAPH ?graph {
   ?a ?b ?c.
-  ?a rdf:type ?type.
+  ?a a ?type.
  }
  VALUES (?graph ?type) { 
   (graphs:grades school:Grade) 

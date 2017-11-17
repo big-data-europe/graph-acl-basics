@@ -2,7 +2,7 @@
 
 (*unique-variables* '(?user ?role))
 
-(*query-functional-properties?* #f)
+(*query-functional-properties?* #t)
 
 (define-constraint  
   'read 
@@ -23,14 +23,12 @@ WHERE {
  {
   @access Type(?type)
   FILTER (?type != school:Grade)
-  OPTIONAL {
-   GRAPH graphs:people {
+ GRAPH graphs:people {
     ?user school:role ?role.
-   }
   }
   GRAPH ?graph {
    ?a ?b ?c.
-   ?a rdf:type ?type.
+   ?a a ?type.
   }
  }
  UNION {
@@ -38,7 +36,7 @@ WHERE {
   FILTER (?type = school:Grade)
   GRAPH ?graph {
    ?a ?b ?c.
-   ?a rdf:type ?type.
+   ?a a ?type.
   }
   {
    GRAPH graphs:people {
@@ -90,14 +88,12 @@ WHERE {
  {
   @access Type(?type)
   FILTER (?type != school:Grade)
-  OPTIONAL {
    GRAPH graphs:people {
     ?user school:role ?role.
    }
-  }
   GRAPH ?graph {
    ?a ?b ?c.
-   ?a rdf:type ?type.
+   ?a a ?type.
   }
  }
  UNION {
@@ -105,7 +101,7 @@ WHERE {
   FILTER (?type = school:Grade)
   GRAPH ?graph {
    ?a ?b ?c.
-   ?a rdf:type ?type.
+   ?a a ?type.
   }
   {
    GRAPH graphs:people {
