@@ -52,10 +52,14 @@ var Req = function(method, path, succeed, fail){
 }
 
 var withAuth = function(user, cb){
-    var request = Req("POST", "/as/auth", cb, function(){ alert('Error inserting authorization triples') });
-    request.send("user=" + escape(user));
+    if( user == '' ){
+        cb()
+    }
+    else {
+        var request = Req("POST", "/as/auth", cb, function(){ alert('Error inserting authorization triples') });
+        request.send("user=" + escape(user));
+    }
 }
-
 
 readwrite.onchange = function(e){ 
     if(e.target.checked){

@@ -10,7 +10,8 @@
       <div class="title">Constraint Rewriter Sandbox
         <div class="user">
           <select id="authorization-user">
-            <option>http://mu.semte.ch/users/principle</option>
+            <option></option>
+            <option selected="selected">http://mu.semte.ch/users/principle</option>
             <option>http://mu.semte.ch/users/teacher1</option>
             <option>http://mu.semte.ch/users/student1</option>
           </select>      
@@ -149,8 +150,7 @@ VALUES ?graph { &lt;http://example.com/people&gt; }</pre>
         <textarea id="query">
 SELECT *
 WHERE {
-  ?s a foaf:Person;
-     foaf:name ?name
+  ?s ?p ?o
 }
         </textarea>        
       </div> <!-- .panel -->
