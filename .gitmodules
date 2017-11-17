@@ -10,3 +10,6 @@
 [submodule "mu-cl-resources"]
 	path = mu-cl-resources
 	url = https://github.com/mu-semtech/mu-cl-resources.git
+[submodule "mu-query-rewriter-sandbox"]
+	path = mu-query-rewriter-sandbox
+	url = https://github.com/nathanielrb/mu-query-rewriter-sandbox

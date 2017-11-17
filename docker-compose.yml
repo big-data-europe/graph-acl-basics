@@ -7,7 +7,7 @@ services:
     links:
       - identifier:backend
     volumes:
-      - ./sandbox:/app
+      - ./mu-query-rewriter-sandbox:/app
   app:
     image: semtech/ember-proxy-service
     ports:
