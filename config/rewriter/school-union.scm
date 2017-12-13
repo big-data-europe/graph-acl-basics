@@ -4,9 +4,13 @@
 
 (*query-functional-properties?* #t)
 
+(*queried-properties* '())
+
 (define-constraint  
   'read/write 
-  (lambda ()    "
+  (lambda () 
+    (replace-headers
+      "
 PREFIX graphs: <http://mu.semte.ch/school/graphs/>
 PREFIX school: <http://mu.semte.ch/vocabularies/school/>
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>
@@ -20,21 +24,24 @@ WHERE {
    ?a ?b ?c.
    ?a rdf:type school:Grade.
   }
- } UNION  {
+ }
+ UNION {
   GRAPH graphs:classes {
    ?a ?b ?c.
    ?a rdf:type school:Class.
   }
- } UNION  {
+ }
+ UNION {
   GRAPH graphs:subjects {
    ?a ?b ?c.
    ?a rdf:type school:Subject.
   }
- } UNION  {
+ }
+ UNION {
   GRAPH graphs:people {
    ?a ?b ?c.
    ?a rdf:type foaf:Person.
   }
- } 
-}  "))
+ }
+}")))
 

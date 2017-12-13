@@ -4,9 +4,14 @@
 
 (*query-functional-properties?* #t)
 
+(*queried-properties* '())
+
+(headers-replacements '(("<SESSION>" mu-session-id uri)))
+
 (define-constraint  
   'read 
-  (lambda ()    "
+  (lambda () 
+    (replace-headers "
 PREFIX graphs: <http://mu.semte.ch/school/graphs/>
 PREFIX school: <http://mu.semte.ch/vocabularies/school/>
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>
@@ -23,12 +28,12 @@ WHERE {
  {
   @access Type(?type)
   FILTER (?type != school:Grade)
- GRAPH graphs:people {
-    ?user school:role ?role.
+  GRAPH graphs:people {
+   ?user school:role ?role.
   }
   GRAPH ?graph {
    ?a ?b ?c.
-   ?a a ?type.
+   ?a rdf:type ?type.
   }
  }
  UNION {
@@ -36,7 +41,7 @@ WHERE {
   FILTER (?type = school:Grade)
   GRAPH ?graph {
    ?a ?b ?c.
-   ?a a ?type.
+   ?a rdf:type ?type.
   }
   {
    GRAPH graphs:people {
@@ -67,11 +72,12 @@ WHERE {
   (graphs:classes school:Class) 
   (graphs:people foaf:Person) 
  }
-}  "))
+}")))
 
 (define-constraint  
   'write 
-  (lambda ()     "
+  (lambda ()     (replace-headers 
+    "
 PREFIX graphs: <http://mu.semte.ch/school/graphs/>
 PREFIX school: <http://mu.semte.ch/vocabularies/school/>
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>
@@ -88,12 +94,12 @@ WHERE {
  {
   @access Type(?type)
   FILTER (?type != school:Grade)
-   GRAPH graphs:people {
-    ?user school:role ?role.
-   }
+  GRAPH graphs:people {
+   ?user school:role ?role.
+  }
   GRAPH ?graph {
    ?a ?b ?c.
-   ?a a ?type.
+   ?a rdf:type ?type.
   }
  }
  UNION {
@@ -101,7 +107,7 @@ WHERE {
   FILTER (?type = school:Grade)
   GRAPH ?graph {
    ?a ?b ?c.
-   ?a a ?type.
+   ?a rdf:type ?type.
   }
   {
    GRAPH graphs:people {
@@ -124,5 +130,5 @@ WHERE {
   (graphs:classes school:Class) 
   (graphs:people foaf:Person) 
  }
-}  "))
+}  ")))
 

@@ -42,6 +42,7 @@ services:
       USE_TEMP: "false"
       CALCULATE_ANNOTATIONS: "true"
       REWRITE_SELECT_QUERIES: "true"
+      PLUGIN: "school-values"
     volumes:
       - ./config/rewriter:/config
       - ~/code/mu-graph-rewriter/sandbox:/app/sandbox
@@ -67,7 +68,8 @@ services:
     volumes:
       - ./data/db:/data
   resource:
-    image: semtech/mu-cl-resources
+    # image: semtech/mu-cl-resources
+    build: ~/projects/yds/mudcat/mu-cl-resources
     links:
       - as:database
     volumes:
