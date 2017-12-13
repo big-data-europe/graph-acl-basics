@@ -6,9 +6,10 @@ This is a basis for learning to work with access rights stored in the graphs bas
 
 ### Setup
 
-Clone this project, and build the sample application (requires Node.js, Bower, and ember-cli):
+Clone this project, initialize the submodules, and build the sample application (requires Node.js, Bower, and ember-cli):
 
     cd ./rewriter-sandbox-application
+    nmp install
     ember build
 
 ### Boot up the system
@@ -20,13 +21,16 @@ Boot your microservices-enabled system using docker-compose.
 
 You can shut down using `docker-compose stop` and remove everything using `docker-compose rm`.
 
-### The Sandbox and Sample App
+### Use the Sandbox and Sample Application
 
 The sandbox is available at http://localhost:9000 and allows interactive testing of rewriting logic.
 
-A basic school model, as described in `config/resource/domain.lisp` is set up to allow testing of the model. In the sandbox, you can load a tested constraint plugin and generate random data according to this model.
+Click "Apply Constraint" to apply the current constraint system-wide, for testing in the sample application.
 
-The sample application is available at http://localhost:9001
+The sample application is available at http://localhost:9001 and allows you to generate and browse random data, according to the currently applied constraint.
+
+It is based on a simple school model, as described in `config/resource/domain.lisp`.
+
 
 ### Annotations
 
