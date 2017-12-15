@@ -7,10 +7,7 @@
 (*queried-properties* '())
 
 (define-constraint  
-  'read/write 
-  (lambda () 
-    (replace-headers
-      "
+  'read/write   "
 PREFIX graphs: <http://mu.semte.ch/school/graphs/>
 PREFIX school: <http://mu.semte.ch/vocabularies/school/>
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>
@@ -43,5 +40,4 @@ WHERE {
    ?a rdf:type foaf:Person.
   }
  }
-}")))
-
+}")

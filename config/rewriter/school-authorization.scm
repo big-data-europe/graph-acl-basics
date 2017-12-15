@@ -9,9 +9,7 @@
 (headers-replacements '(("<SESSION>" mu-session-id uri)))
 
 (define-constraint  
-  'read 
-  (lambda () 
-    (replace-headers "
+  'read "
 PREFIX graphs: <http://mu.semte.ch/school/graphs/>
 PREFIX school: <http://mu.semte.ch/vocabularies/school/>
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>
@@ -72,12 +70,10 @@ WHERE {
   (graphs:classes school:Class) 
   (graphs:people foaf:Person) 
  }
-}")))
+}")
 
 (define-constraint  
-  'write 
-  (lambda ()     (replace-headers 
-    "
+  'write "
 PREFIX graphs: <http://mu.semte.ch/school/graphs/>
 PREFIX school: <http://mu.semte.ch/vocabularies/school/>
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>
@@ -130,5 +126,4 @@ WHERE {
   (graphs:classes school:Class) 
   (graphs:people foaf:Person) 
  }
-}  ")))
-
+}  ")
