@@ -6,7 +6,7 @@
 
 (*queried-properties* '())
 
-(headers-replacements '(("<SESSION>" mu-session-id uri)))
+(*headers-replacements* '(("<SESSION>" mu-session-id uri)))
 
 (define-constraint  
   'read "
