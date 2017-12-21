@@ -1,6 +1,6 @@
 # graph-acl-sandbox
 
-This is a basis for learning to work with access rights stored in the graphs based on the work of @nathanielrb in https://github.com/nathanielrb/mu-graph-rewriter
+This is a basis for learning to work with access rights stored in the graphs using the [Mu Query Rewriter](https://github.com/big-data-europe/mu-graph-rewriter).
 
 ## How to
 
